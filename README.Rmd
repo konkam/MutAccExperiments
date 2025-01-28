@@ -1,0 +1,119 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# Mutation Accumulation Experiments
+
+This is a package to analyse data generated from Mutation Accumulation Experiments. 
+
+## How to use this package
+
+### Installation
+
+Clone the repository on your computer using
+
+```
+git clone git@forgemia.inra.fr:konkam/MutAccExperiments.git
+```
+
+or 
+
+```
+git clone https://forgemia.inra.fr/konkam/MutAccExperiments.git
+
+```
+
+You should then install the present package on your computer, using a command such a the following, from inside the package folder:
+
+
+```
+Rscript -e "devtools::install_local('.')"
+```
+
+Alternatively, you may open the folder using the Rstudio editor and press `Ctrl + Alt + B`.
+
+
+- Dependencies should be:
+    - R package devtools
+    - JAGS + the R package RJags (On ubuntu, jags is on the canonical repository, available by apt install jags)
+    - R package tidyverse
+    - R package coda
+    - A functioning latex installation
+    - cmake
+
+### Data format
+
+
+```{r}
+library(MutAccExperiments)
+library(tidyverse)
+```
+
+```{r}
+input_data = read.delim(file = "data-raw/SAT_mcmc_chain_labmut_R3610MMR-3610_inputfile.csv", sep = " ")
+input_data
+```
+
+The minimum data required to run the analysis is a data frame with the following columns:
+
+```{r}
+minimal_input_data = input_data %>% 
+  filter(strain == first(strain)) %>% 
+  rename(mutation_type = context_id,
+         m = m_sc, 
+         n = n_c,
+         t = t_s) %>% 
+  select(mutation_type, m, n, t) 
+minimal_input_data
+```
+
+### Fitting the GCM model
+
+```{r}
+fit_GCM_model = minimal_input_data %>% 
+  EstimateMusGCM_onestrain()
+```
+
+### Accessing posterior samples
+
+```{r}
+extract_posterior_samples(fit_GCM_model)
+```
+
+Note that the m_pred variables are samples from the posterior predictive distribution evaluated at the observed data points.
+
+The variables with a suffix "_prior" are samples from the prior distribution.
+
+### Various MCMC and model checks
+
+```{r}
+fit_GCM_model %>% 
+  traceplot
+  
+```
+
+```{r}
+fit_GCM_model %>% 
+  summary
+```
+```{r}
+fit_GCM_model %>% 
+  plot_prior_posterior
+```
+
+```{r}
+posterior_predictive_one_strain(minimal_input_data, fit_GCM_model)
+```
+
+

@@ -1,0 +1,11 @@
+"strain","mut.type","m_{s,type}","n_c","t_s"
+"DmutS3610","transition",4711,3794733,38000
+"DmutS3610","transversion",133,3794733,38000
+"MMR-","transition",413,3794733,6453.05427535676
+"MMR-","transversion",6,3794733,6453.05427535676
+"WT3610","transition",238,3794733,248920
+"WT3610","transversion",81,3794733,248920
+"polC","transition",348,3794733,1894.94450943016
+"polC","transversion",47,3794733,1894.94450943016
+"polC_mutL","transition",484,3794733,230.466224119884
+"polC_mutL","transversion",18,3794733,230.466224119884
