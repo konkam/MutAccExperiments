@@ -40,3 +40,13 @@ mut_acc_experiment_data_ts_tv_3610 = read.csv("data-raw/table-nb-mut-ts-tv_2024_
            as.numeric())
 
 usethis::use_data(mut_acc_experiment_data_ts_tv_3610, overwrite = TRUE)
+
+input_data = read.delim(file = "data-raw/SAT_mcmc_chain_labmut_R3610MMR-3610_inputfile.csv", sep = " ")
+minimal_input_data_onestrain = input_data %>% 
+  filter(strain == first(strain)) %>% 
+  rename(mutation_type = context_id,
+         m = m_sc, 
+         n = n_c,
+         t = t_s) %>% 
+  select(mutation_type, m, n, t) 
+usethis::use_data(minimal_input_data_onestrain, overwrite = TRUE)

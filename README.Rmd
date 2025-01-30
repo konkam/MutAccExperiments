@@ -1,5 +1,8 @@
 ---
-output: github_document
+title: Mutation Accumulation Experiments
+output: 
+  github_document:
+    toc: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -13,13 +16,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Mutation Accumulation Experiments
-
 This is a package to analyse data generated from Mutation Accumulation Experiments. 
 
-## How to use this package
 
-### Installation
+# Installation
 
 Clone the repository on your computer using
 
@@ -52,7 +52,7 @@ Alternatively, you may open the folder using the Rstudio editor and press `Ctrl 
     - A functioning latex installation
     - cmake
 
-### Data format
+# Data format
 
 
 ```{r}
@@ -62,45 +62,67 @@ library(tidyverse)
 
 ```{r}
 input_data = read.delim(file = "data-raw/SAT_mcmc_chain_labmut_R3610MMR-3610_inputfile.csv", sep = " ")
-input_data
 ```
 
 The minimum data required to run the analysis is a data frame with the following columns:
 
 ```{r}
-minimal_input_data = input_data %>% 
+minimal_input_data_onestrain = input_data %>% 
   filter(strain == first(strain)) %>% 
   rename(mutation_type = context_id,
          m = m_sc, 
          n = n_c,
          t = t_s) %>% 
   select(mutation_type, m, n, t) 
-minimal_input_data
+minimal_input_data_onestrain
 ```
 
-### Fitting the GCM model
+```{r}
+minimal_input_data_onestrain %>% 
+  check_input_format_GCM()
+```
+
+
+# Fitting the GCM model
 
 ```{r}
-fit_GCM_model = minimal_input_data %>% 
+fit_GCM_model = minimal_input_data_onestrain %>% 
   EstimateMusGCM_onestrain()
 ```
 
-### Accessing posterior samples
+## Accessing posterior samples
 
 ```{r}
-extract_posterior_samples(fit_GCM_model)
+extract_posterior_samples(fit_GCM_model, type = "mu")
+```
+
+```{r}
+extract_posterior_samples(fit_GCM_model, type = "hyperparameters")
+```
+
+```{r}
+extract_posterior_samples(fit_GCM_model, type = "predictive")
+```
+
+```{r}
+extract_posterior_samples(fit_GCM_model, type = "prior")
 ```
 
 Note that the m_pred variables are samples from the posterior predictive distribution evaluated at the observed data points.
 
 The variables with a suffix "_prior" are samples from the prior distribution.
 
-### Various MCMC and model checks
+You can also access the posterior samples at once:
+
+```{r}
+extract_posterior_samples(fit_GCM_model)
+```
+
+## Various MCMC and model checks
 
 ```{r}
 fit_GCM_model %>% 
   traceplot
-  
 ```
 
 ```{r}
@@ -113,7 +135,65 @@ fit_GCM_model %>%
 ```
 
 ```{r}
-posterior_predictive_one_strain(minimal_input_data, fit_GCM_model)
+posterior_predictive_one_strain(minimal_input_data_onestrain, fit_GCM_model)
 ```
 
+# Fitting the model with saturation
+
+```{r}
+minimal_input_data = input_data %>% 
+  rename(mutation_type = context_id,
+         m = m_sc, 
+         n = n_c,
+         t = t_s)  %>% 
+  mutate(strain = gsub("WT3610", "wt", strain)) %>% 
+  select(strain, mutation_type, m, n, t) 
+
+minimal_input_data
+
+```
+
+```{r}
+fit_Saturation_model = EstimateMusSaturation(minimal_input_data)
+```
+
+## Accessing posterior samples
+
+```{r}
+extract_posterior_samples(fit_Saturation_model, type = "mu")
+```
+
+```{r}
+extract_posterior_samples(fit_Saturation_model, type = "hyperparameters")
+```
+
+```{r}
+extract_posterior_samples(fit_Saturation_model, type = "predictive")
+```
+
+Note that the m_pred variables are samples from the posterior predictive distribution evaluated at the observed data points.
+
+The variables with a suffix "_prior" are samples from the prior distribution.
+
+You can also access the posterior samples at once:
+
+```{r}
+extract_posterior_samples(fit_Saturation_model)
+```
+
+## Various MCMC and model checks
+
+```{r}
+fit_Saturation_model %>% 
+  traceplot
+```
+
+```{r}
+fit_Saturation_model %>% 
+  summary
+```
+```{r}
+fit_Saturation_model %>% 
+  plot_prior_posterior
+```
 
