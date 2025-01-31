@@ -199,6 +199,7 @@ fit_MMRsaturation_model %>%
 fit_MMRsaturation_model %>% 
   summary
 ```
+
 ```{r}
 fit_MMRsaturation_model %>% 
   plot_prior_posterior

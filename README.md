@@ -145,16 +145,16 @@ extract_posterior_samples(fit_GCM_model, type = "mu")
 #> # A tibble: 8,000 × 8
 #>    `log10_mu[1]` `log10_mu[2]` `log10_mu[3]` `log10_mu[4]` `log10_mu[5]`
 #>            <dbl>         <dbl>         <dbl>         <dbl>         <dbl>
-#>  1         -9.57        -10.1          -10.7         -9.77         -10.4
-#>  2         -9.52        -10.2          -10.6         -9.59         -10.4
-#>  3         -9.54        -10.1          -10.6         -9.66         -10.4
-#>  4         -9.54        -10.1          -10.7         -9.66         -10.3
-#>  5         -9.58        -10.2          -10.6         -9.67         -10.3
-#>  6         -9.60        -10.2          -10.6         -9.67         -10.4
-#>  7         -9.58         -9.99         -10.5         -9.66         -10.4
-#>  8         -9.51        -10.2          -10.5         -9.68         -10.5
-#>  9         -9.56        -10.3          -10.6         -9.65         -10.3
-#> 10         -9.55        -10.4          -10.9         -9.66         -10.3
+#>  1         -9.52         -10.1         -10.7         -9.67         -10.4
+#>  2         -9.54         -10.3         -10.6         -9.65         -10.2
+#>  3         -9.55         -10.3         -10.7         -9.63         -10.3
+#>  4         -9.57         -10.4         -10.9         -9.70         -10.3
+#>  5         -9.54         -10.2         -10.6         -9.64         -10.2
+#>  6         -9.58         -10.3         -10.6         -9.69         -10.3
+#>  7         -9.60         -10.3         -10.6         -9.68         -10.2
+#>  8         -9.59         -10.2         -10.6         -9.63         -10.4
+#>  9         -9.48         -10.3         -10.7         -9.68         -10.3
+#> 10         -9.55         -10.3         -10.8         -9.62         -10.4
 #> # ℹ 7,990 more rows
 #> # ℹ 3 more variables: `log10_mu[6]` <dbl>, iteration <int>, chain_id <int>
 ```
@@ -164,16 +164,16 @@ extract_posterior_samples(fit_GCM_model, type = "hyperparameters")
 #> # A tibble: 8,000 × 5
 #>    log10_sigma log10_mean loglikelihood iteration chain_id
 #>          <dbl>      <dbl>         <dbl>     <int>    <int>
-#>  1       0.342     -10.1          -21.9         1        1
-#>  2       0.468      -9.93         -17.8         2        1
-#>  3       0.279      -9.99         -18.4         3        1
-#>  4       0.392     -10.0          -18.9         4        1
-#>  5       0.242     -10.1          -17.7         5        1
-#>  6       0.637     -10.4          -18.8         6        1
-#>  7       0.555     -10.1          -29.2         7        1
-#>  8       0.461     -10.2          -22.6         8        1
-#>  9       0.704      -9.97         -17.9         9        1
-#> 10       0.625     -10.2          -17.3        10        1
+#>  1       0.503     -10.2          -18.4         1        1
+#>  2       0.428     -10.2          -18.3         2        1
+#>  3       0.461     -10.3          -17.0         3        1
+#>  4       0.570     -10.1          -19.3         4        1
+#>  5       0.751      -9.53         -17.3         5        1
+#>  6       0.481     -10.2          -18.0         6        1
+#>  7       0.492     -10.2          -18.1         7        1
+#>  8       0.328     -10.1          -17.2         8        1
+#>  9       0.453     -10.4          -18.2         9        1
+#> 10       0.377     -10.3          -17.7        10        1
 #> # ℹ 7,990 more rows
 ```
 
@@ -182,16 +182,16 @@ extract_posterior_samples(fit_GCM_model, type = "predictive")
 #> # A tibble: 8,000 × 8
 #>    `m_pred[1]` `m_pred[2]` `m_pred[3]` `m_pred[4]` `m_pred[5]` `m_pred[6]`
 #>          <dbl>       <dbl>       <dbl>       <dbl>       <dbl>       <dbl>
-#>  1         121          28           5         110          21          18
-#>  2         122          21          10         148          15          26
-#>  3         105          29          15         127          20          27
-#>  4         108          35           7         120          31          29
-#>  5         118          33           5         118          18          28
-#>  6         102          31          13         120          25          21
-#>  7         113          34          22         121          22          12
-#>  8         133          29          20         115           9          14
-#>  9         122          16           6         132          18          28
-#> 10         123          21           5         126          27          23
+#>  1         119          42           6         120          17          26
+#>  2         102          20           7         113          32          25
+#>  3         104          24           8         136          19          22
+#>  4         109          25           2         113          29          28
+#>  5         120          32           7         119          41          23
+#>  6         117          18          10         108          25          39
+#>  7          97          18          12         124          23          22
+#>  8         126          26          12         117          17          23
+#>  9         161          19           7         114          36          24
+#> 10         124          12           8         117          16          26
 #> # ℹ 7,990 more rows
 #> # ℹ 2 more variables: iteration <int>, chain_id <int>
 ```
@@ -201,16 +201,16 @@ extract_posterior_samples(fit_GCM_model, type = "prior")
 #> # A tibble: 8,000 × 5
 #>    log10_mean_prior log10_sigma_prior log10_mu_prior iteration chain_id
 #>               <dbl>             <dbl>          <dbl>     <int>    <int>
-#>  1           -11.0              0.705         -10.5          1        1
-#>  2           -13.2              0.365         -12.9          2        1
-#>  3            -6.84             0.177          -6.91         3        1
-#>  4            -7.67             0.164          -7.36         4        1
-#>  5            -8.83             0.156          -8.85         5        1
-#>  6            -3.75             0.325          -3.14         6        1
-#>  7            -7.15             1.03           -7.94         7        1
-#>  8            -5.02             0.665          -4.76         8        1
-#>  9            -8.57             0.673          -7.66         9        1
-#> 10            -5.64             0.346          -4.46        10        1
+#>  1            -6.32            0.0568          -6.98         1        1
+#>  2            -5.83            0.345           -6.75         2        1
+#>  3            -7.43            0.313           -7.53         3        1
+#>  4           -13.9             1.38           -13.5          4        1
+#>  5           -10.4             2.69           -10.5          5        1
+#>  6            -9.01            0.259           -8.56         6        1
+#>  7            -7.97            0.258           -8.07         7        1
+#>  8           -11.6             0.195          -11.9          8        1
+#>  9            -2.47            0.155           -3.23         9        1
+#> 10           -10.3             0.134          -11.0         10        1
 #> # ℹ 7,990 more rows
 ```
 
@@ -227,16 +227,16 @@ extract_posterior_samples(fit_GCM_model)
 #> # A tibble: 8,000 × 20
 #>    iteration `m_pred[1]` `m_pred[2]` `m_pred[3]` `m_pred[4]` `m_pred[5]`
 #>        <int>       <dbl>       <dbl>       <dbl>       <dbl>       <dbl>
-#>  1         1         121          28           5         110          21
-#>  2         2         122          21          10         148          15
-#>  3         3         105          29          15         127          20
-#>  4         4         108          35           7         120          31
-#>  5         5         118          33           5         118          18
-#>  6         6         102          31          13         120          25
-#>  7         7         113          34          22         121          22
-#>  8         8         133          29          20         115           9
-#>  9         9         122          16           6         132          18
-#> 10        10         123          21           5         126          27
+#>  1         1         119          42           6         120          17
+#>  2         2         102          20           7         113          32
+#>  3         3         104          24           8         136          19
+#>  4         4         109          25           2         113          29
+#>  5         5         120          32           7         119          41
+#>  6         6         117          18          10         108          25
+#>  7         7          97          18          12         124          23
+#>  8         8         126          26          12         117          17
+#>  9         9         161          19           7         114          36
+#> 10        10         124          12           8         117          16
 #> # ℹ 7,990 more rows
 #> # ℹ 14 more variables: `m_pred[6]` <dbl>, `log10_mu[1]` <dbl>,
 #> #   `log10_mu[2]` <dbl>, `log10_mu[3]` <dbl>, `log10_mu[4]` <dbl>,
@@ -258,43 +258,43 @@ fit_GCM_model %>%
 fit_GCM_model %>% 
   summary
 #>                         Lower95      Median     Upper95        Mean          SD
-#> m_pred[1]          8.700000e+01 116.0000000 146.0000000 116.8141250 15.22255863
-#> m_pred[2]          1.000000e+01  23.0000000  36.0000000  23.4318750  6.75255941
-#> m_pred[3]          1.000000e+00   9.0000000  17.0000000   9.2112500  4.29714226
-#> m_pred[4]          8.900000e+01 119.0000000 148.0000000 118.9743750 15.34665789
-#> m_pred[5]          1.200000e+01  25.0000000  38.0000000  25.2887500  6.93001635
-#> m_pred[6]          1.100000e+01  25.0000000  38.0000000  25.2475000  7.04279375
-#> log10_mu[1]       -9.632165e+00  -9.5542076  -9.4773091  -9.5547344  0.04001112
-#> log10_mu[2]       -1.043576e+01 -10.2581845 -10.0901939 -10.2617677  0.08903048
-#> log10_mu[3]       -1.099312e+01 -10.6703090 -10.4199784 -10.6806787  0.14839128
-#> log10_mu[4]       -9.735577e+00  -9.6553985  -9.5827072  -9.6557756  0.03936371
-#> log10_mu[5]       -1.049553e+01 -10.3297937 -10.1676276 -10.3321875  0.08489403
-#> log10_mu[6]       -1.050452e+01 -10.3305344 -10.1693253 -10.3323711  0.08597560
-#> log10_mean        -1.056757e+01 -10.1304452  -9.6666999 -10.1287712  0.22517410
-#> log10_sigma        2.407698e-01   0.4800505   0.8586952   0.5142867  0.17811193
-#> log10_mean_prior  -1.366115e+01  -7.9930086  -2.0263568  -7.9800380  2.98106093
-#> log10_sigma_prior  2.255602e-04   0.4199919   1.4672284   0.5469710  0.48971872
-#> log10_mu_prior    -1.387007e+01  -7.9783455  -2.0995236  -7.9868332  3.03020397
-#> loglikelihood     -2.259353e+01 -18.7924016 -16.5130323 -19.1140469  1.73716698
+#> m_pred[1]          8.600000e+01 116.0000000 146.0000000 116.8637500 15.42694671
+#> m_pred[2]          1.000000e+01  23.0000000  36.0000000  23.1215000  6.76348326
+#> m_pred[3]          2.000000e+00   9.0000000  17.0000000   9.1456250  4.24684269
+#> m_pred[4]          8.800000e+01 119.0000000 147.0000000 119.2938750 15.24458304
+#> m_pred[5]          1.200000e+01  25.0000000  39.0000000  25.4291250  7.15130194
+#> m_pred[6]          1.100000e+01  25.0000000  38.0000000  25.4785000  7.06797583
+#> log10_mu[1]       -9.631881e+00  -9.5541419  -9.4739386  -9.5544863  0.04057941
+#> log10_mu[2]       -1.044534e+01 -10.2605788 -10.0950172 -10.2634517  0.08952878
+#> log10_mu[3]       -1.096282e+01 -10.6707332 -10.4010667 -10.6798175  0.14535859
+#> log10_mu[4]       -9.732319e+00  -9.6542977  -9.5782116  -9.6543513  0.03960798
+#> log10_mu[5]       -1.050012e+01 -10.3297875 -10.1646802 -10.3326401  0.08605969
+#> log10_mu[6]       -1.050092e+01 -10.3284469 -10.1651612 -10.3306282  0.08498760
+#> log10_mean        -1.057998e+01 -10.1219731  -9.6794782 -10.1222264  0.22690121
+#> log10_sigma        2.384310e-01   0.4825386   0.8880191   0.5211335  0.19077198
+#> log10_mean_prior  -1.361292e+01  -8.0130327  -2.0651334  -7.9872935  2.98271723
+#> log10_sigma_prior  8.920633e-05   0.4077116   1.4853073   0.5426845  0.51806345
+#> log10_mu_prior    -1.409692e+01  -8.0403123  -2.2062202  -7.9926409  3.03183015
+#> loglikelihood     -2.242250e+01 -18.8235532 -16.4458200 -19.1260931  1.72083624
 #>                   Mode        MCerr MC%ofSD SSeff        AC.20      psrf
-#> m_pred[1]          114 0.1707279362     1.1  7950 -0.003006841 0.9999248
-#> m_pred[2]           23 0.0770932794     1.1  7672 -0.008837030 0.9999742
-#> m_pred[3]            8 0.0509339396     1.2  7118 -0.001655900 0.9999393
-#> m_pred[4]          122 0.1783329042     1.2  7406  0.011241471 1.0002941
-#> m_pred[5]           24 0.0796208682     1.1  7576 -0.002646626 0.9999485
-#> m_pred[6]           21 0.0809301298     1.1  7573 -0.020413922 1.0001178
-#> log10_mu[1]         NA 0.0004712536     1.2  7209  0.002953787 1.0002220
-#> log10_mu[2]         NA 0.0010767462     1.2  6837 -0.013444783 1.0000813
-#> log10_mu[3]         NA 0.0018619401     1.3  6352  0.010039317 1.0006133
-#> log10_mu[4]         NA 0.0004836660     1.2  6624 -0.007507395 1.0002665
-#> log10_mu[5]         NA 0.0010141189     1.2  7008  0.014633555 1.0003063
-#> log10_mu[6]         NA 0.0010084848     1.2  7268  0.007929926 1.0008681
-#> log10_mean          NA 0.0025175230     1.1  8000 -0.015670378 1.0000043
-#> log10_sigma         NA 0.0027314518     1.5  4252 -0.028050715 0.9999347
-#> log10_mean_prior    NA 0.0318623648     1.1  8754 -0.002433223 1.0002128
-#> log10_sigma_prior   NA 0.0054752218     1.1  8000 -0.003129293 0.9999941
-#> log10_mu_prior      NA 0.0324294375     1.1  8731 -0.004030892 1.0002228
-#> loglikelihood       NA 0.0224006650     1.3  6014 -0.001368614 0.9999871
+#> m_pred[1]          113 0.1773113463     1.1  7570  0.025608936 1.0001351
+#> m_pred[2]           20 0.0756180417     1.1  8000  0.013380226 0.9999760
+#> m_pred[3]            7 0.0502354585     1.2  7147  0.016255714 1.0001684
+#> m_pred[4]          118 0.1745416916     1.1  7628 -0.019456397 1.0000509
+#> m_pred[5]           23 0.0840972386     1.2  7231  0.010315396 1.0000333
+#> m_pred[6]           24 0.0827498435     1.2  7296 -0.001397931 1.0002942
+#> log10_mu[1]         NA 0.0004732438     1.2  7353  0.008381707 0.9999805
+#> log10_mu[2]         NA 0.0011282623     1.3  6297  0.003464174 1.0000125
+#> log10_mu[3]         NA 0.0018129078     1.2  6429 -0.000977797 1.0000954
+#> log10_mu[4]         NA 0.0004484250     1.1  7802 -0.006816225 1.0000127
+#> log10_mu[5]         NA 0.0010591795     1.2  6602 -0.009233665 0.9999905
+#> log10_mu[6]         NA 0.0010450737     1.2  6613 -0.021217756 1.0002867
+#> log10_mean          NA 0.0025368327     1.1  8000  0.018040875 1.0002007
+#> log10_sigma         NA 0.0034715395     1.8  3020  0.006664236 1.0002023
+#> log10_mean_prior    NA 0.0333477924     1.1  8000  0.003574647 1.0001390
+#> log10_sigma_prior   NA 0.0057491111     1.1  8120 -0.009531894 1.0002215
+#> log10_mu_prior      NA 0.0341461606     1.1  7884  0.005351398 1.0002839
+#> loglikelihood       NA 0.0219309641     1.3  6157  0.001864577 1.0000794
 ```
 
 ``` r
@@ -310,12 +310,12 @@ posterior_predictive_one_strain(fit_GCM_model)
 #> # A tibble: 6 × 17
 #>   mutation_id m_pred_mean m_pred_median m_pred_infCI m_pred_supCI
 #>         <int>       <dbl>         <dbl>        <dbl>        <dbl>
-#> 1           1      117.             116           88          148
-#> 2           2       23.4             23           12           38
-#> 3           3        9.21             9            2           19
-#> 4           4      119.             119           91          151
-#> 5           5       25.3             25           13           40
-#> 6           6       25.2             25           13           40
+#> 1           1      117.             116         89            149
+#> 2           2       23.1             23         12.0           38
+#> 3           3        9.15             9          2             19
+#> 4           4      119.             119         91            150
+#> 5           5       25.4             25         13             41
+#> 6           6       25.5             25         13             40
 #> # ℹ 12 more variables: m_pred_infquart <dbl>, m_pred_supquart <dbl>,
 #> #   genotype <chr>, mutation_label <chr>, nposinref <int>, ngeninMA <dbl>,
 #> #   bps.n <int>, strain <chr>, context <chr>, m <int>, n <int>, t <dbl>
@@ -398,12 +398,12 @@ fit_MMRsaturation_model = EstimateMusMMRsaturation(input_data)
 #> 
 #> Calculating the necessary sample length based on the Raftery and
 #> Lewis's diagnostic...
-#> The model will need to be run for a further 2457 updates.  This will
+#> The model will need to be run for a further 2605 updates.  This will
 #> take approximately 0.2 seconds.
 #> 
 #> Calling the simulation using the rjags method...
 #> Note: the model did not require adaptation
-#> Running the model for 2457 iterations...
+#> Running the model for 2605 iterations...
 #> Simulation complete
 #> Finished running the simulation
 #> Indicated sample length achieved
@@ -420,16 +420,16 @@ extract_posterior_samples(fit_MMRsaturation_model, type = "mu")
 #> # A tibble: 8,000 × 26
 #>    `mu_wt[1]` `mu_wt[2]` `mu_wt[3]` `mu_wt[4]` `mu_wt[5]` `mu_wt[6]`
 #>         <dbl>      <dbl>      <dbl>      <dbl>      <dbl>      <dbl>
-#>  1   3.15e-10   6.10e-11   2.33e-11   2.45e-10   5.35e-11   5.69e-11
-#>  2   2.61e-10   6.45e-11   2.97e-11   2.23e-10   5.49e-11   5.86e-11
-#>  3   2.72e-10   5.38e-11   2.03e-11   2.39e-10   5.51e-11   5.69e-11
-#>  4   2.82e-10   7.75e-11   4.71e-11   2.33e-10   3.83e-11   5.99e-11
-#>  5   3.17e-10   6.20e-11   1.88e-11   1.87e-10   6.53e-11   4.99e-11
-#>  6   2.71e-10   5.95e-11   1.88e-11   2.13e-10   5.65e-11   4.17e-11
-#>  7   2.87e-10   6.44e-11   1.77e-11   2.33e-10   4.87e-11   2.99e-11
-#>  8   3.19e-10   4.23e-11   2.51e-11   2.29e-10   3.62e-11   2.15e-11
-#>  9   2.66e-10   4.50e-11   2.62e-11   2.21e-10   3.93e-11   4.94e-11
-#> 10   2.85e-10   6.22e-11   1.47e-11   2.33e-10   5.98e-11   6.53e-11
+#>  1   2.71e-10   5.10e-11   1.44e-11   2.06e-10   4.15e-11   4.99e-11
+#>  2   3.47e-10   6.55e-11   1.78e-11   2.48e-10   3.97e-11   4.29e-11
+#>  3   2.79e-10   6.15e-11   2.11e-11   2.10e-10   5.46e-11   4.85e-11
+#>  4   2.83e-10   5.04e-11   2.61e-11   2.62e-10   4.20e-11   6.90e-11
+#>  5   3.00e-10   8.35e-11   2.32e-11   2.18e-10   4.99e-11   5.07e-11
+#>  6   2.63e-10   4.13e-11   3.49e-11   2.17e-10   3.25e-11   4.51e-11
+#>  7   2.77e-10   7.41e-11   1.86e-11   2.23e-10   3.92e-11   5.79e-11
+#>  8   2.58e-10   6.19e-11   2.66e-11   2.58e-10   5.37e-11   5.14e-11
+#>  9   2.95e-10   8.04e-11   2.57e-11   1.96e-10   5.53e-11   5.49e-11
+#> 10   3.01e-10   7.42e-11   1.60e-11   2.41e-10   4.54e-11   5.25e-11
 #> # ℹ 7,990 more rows
 #> # ℹ 20 more variables: `mu_proofminus[1]` <dbl>, `mu_proofminus[2]` <dbl>,
 #> #   `mu_proofminus[3]` <dbl>, `mu_proofminus[4]` <dbl>,
@@ -444,16 +444,16 @@ extract_posterior_samples(fit_MMRsaturation_model, type = "hyperparameters")
 #> # A tibble: 8,000 × 10
 #>    log10_sigma_wt log10_sigma_MMRminus log10_sigma_MMRproofminus log10_mean_wt
 #>             <dbl>                <dbl>                     <dbl>         <dbl>
-#>  1          0.297                0.727                     0.778        -10.1 
-#>  2          0.308                0.764                     0.767        -10.3 
-#>  3          0.319                0.948                     1.01         -10.1 
-#>  4          0.438                1.34                      0.941         -9.98
-#>  5          0.444                1.29                      0.996         -9.90
-#>  6          0.823                1.01                      0.766        -10.5 
-#>  7          1.08                 0.832                     0.859        -10.5 
-#>  8          0.677                1.05                      0.789        -10.5 
-#>  9          0.562                0.919                     0.586        -10.4 
-#> 10          0.542                1.07                      0.699        -10.4 
+#>  1          0.543                0.889                     0.913        -10.4 
+#>  2          0.849                1.26                      0.888         -9.95
+#>  3          0.731                1.17                      0.654        -10.1 
+#>  4          0.680                1.02                      0.719         -9.79
+#>  5          0.307                0.684                     0.639        -10.2 
+#>  6          0.678                0.577                     0.879        -10.2 
+#>  7          0.601                0.652                     0.860        -10.1 
+#>  8          0.401                1.19                      0.672        -10.1 
+#>  9          0.223                1.24                      0.678         -9.99
+#> 10          0.305                1.27                      0.623        -10.3 
 #> # ℹ 7,990 more rows
 #> # ℹ 6 more variables: log10_mean_MMRminus <dbl>,
 #> #   log10_mean_MMRproofminus <dbl>, theta4 <dbl>, loglikelihood <dbl>,
@@ -465,16 +465,16 @@ extract_posterior_samples(fit_MMRsaturation_model, type = "predictive")
 #> # A tibble: 8,000 × 26
 #>    `m_wt_pred[1]` `m_wt_pred[2]` `m_wt_pred[3]` `m_wt_pred[4]` `m_wt_pred[5]`
 #>             <dbl>          <dbl>          <dbl>          <dbl>          <dbl>
-#>  1            122             26             15            157             28
-#>  2            103             31             13            117             28
-#>  3            121             22              4            149             28
-#>  4            121             39             17            133             18
-#>  5            142             25              9            112             28
-#>  6            101             22              6            121             29
-#>  7            114             33              4            114             29
-#>  8            145             17              4            130             20
-#>  9            132             23             15            101             18
-#> 10            123             25              3            133             27
+#>  1            141             29              5            102             27
+#>  2            173             24              4            128             24
+#>  3            118             40              6            107             29
+#>  4            117             21              8            143             23
+#>  5            118             37              7            103             33
+#>  6            115             20             11            101             11
+#>  7            134             25              5            124             22
+#>  8            111             25             14            139             33
+#>  9            115             46              8             91             24
+#> 10            144             29              3            125             28
 #> # ℹ 7,990 more rows
 #> # ℹ 21 more variables: `m_wt_pred[6]` <dbl>, `m_proofminus_pred[1]` <dbl>,
 #> #   `m_proofminus_pred[2]` <dbl>, `m_proofminus_pred[3]` <dbl>,
@@ -497,16 +497,16 @@ extract_posterior_samples(fit_MMRsaturation_model)
 #> # A tibble: 8,000 × 62
 #>    iteration `mu_wt[1]` `mu_wt[2]` `mu_wt[3]` `mu_wt[4]` `mu_wt[5]` `mu_wt[6]`
 #>        <int>      <dbl>      <dbl>      <dbl>      <dbl>      <dbl>      <dbl>
-#>  1         1   3.15e-10   6.10e-11   2.33e-11   2.45e-10   5.35e-11   5.69e-11
-#>  2         2   2.61e-10   6.45e-11   2.97e-11   2.23e-10   5.49e-11   5.86e-11
-#>  3         3   2.72e-10   5.38e-11   2.03e-11   2.39e-10   5.51e-11   5.69e-11
-#>  4         4   2.82e-10   7.75e-11   4.71e-11   2.33e-10   3.83e-11   5.99e-11
-#>  5         5   3.17e-10   6.20e-11   1.88e-11   1.87e-10   6.53e-11   4.99e-11
-#>  6         6   2.71e-10   5.95e-11   1.88e-11   2.13e-10   5.65e-11   4.17e-11
-#>  7         7   2.87e-10   6.44e-11   1.77e-11   2.33e-10   4.87e-11   2.99e-11
-#>  8         8   3.19e-10   4.23e-11   2.51e-11   2.29e-10   3.62e-11   2.15e-11
-#>  9         9   2.66e-10   4.50e-11   2.62e-11   2.21e-10   3.93e-11   4.94e-11
-#> 10        10   2.85e-10   6.22e-11   1.47e-11   2.33e-10   5.98e-11   6.53e-11
+#>  1         1   2.71e-10   5.10e-11   1.44e-11   2.06e-10   4.15e-11   4.99e-11
+#>  2         2   3.47e-10   6.55e-11   1.78e-11   2.48e-10   3.97e-11   4.29e-11
+#>  3         3   2.79e-10   6.15e-11   2.11e-11   2.10e-10   5.46e-11   4.85e-11
+#>  4         4   2.83e-10   5.04e-11   2.61e-11   2.62e-10   4.20e-11   6.90e-11
+#>  5         5   3.00e-10   8.35e-11   2.32e-11   2.18e-10   4.99e-11   5.07e-11
+#>  6         6   2.63e-10   4.13e-11   3.49e-11   2.17e-10   3.25e-11   4.51e-11
+#>  7         7   2.77e-10   7.41e-11   1.86e-11   2.23e-10   3.92e-11   5.79e-11
+#>  8         8   2.58e-10   6.19e-11   2.66e-11   2.58e-10   5.37e-11   5.14e-11
+#>  9         9   2.95e-10   8.04e-11   2.57e-11   1.96e-10   5.53e-11   5.49e-11
+#> 10        10   3.01e-10   7.42e-11   1.60e-11   2.41e-10   4.54e-11   5.25e-11
 #> # ℹ 7,990 more rows
 #> # ℹ 55 more variables: `mu_proofminus[1]` <dbl>, `mu_proofminus[2]` <dbl>,
 #> #   `mu_proofminus[3]` <dbl>, `mu_proofminus[4]` <dbl>,
@@ -521,13 +521,9 @@ extract_posterior_samples(fit_MMRsaturation_model)
 ``` r
 fit_MMRsaturation_model %>% 
   traceplot
-#> Generating summary statistics and plots (these will NOT be saved for
-#> reuse)...
-#> Calculating summary statistics...
-#> Calculating the Gelman-Rubin statistic for 60 variables....
 ```
 
-<img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-2.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-3.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-4.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-5.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-6.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-7.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-8.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-9.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-10.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-11.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-12.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-13.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-14.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-15.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-16.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-17.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-18.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-19.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-20.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-21.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-22.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-23.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-24.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-25.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-26.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-27.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-28.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-29.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-30.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-31.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-32.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-33.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-34.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-35.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-36.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-37.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-38.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-39.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-40.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-41.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-42.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-43.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-44.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-45.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-46.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-47.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-48.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-49.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-50.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-51.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-52.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-53.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-54.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-55.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-56.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-57.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-58.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-59.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-60.png" width="100%" /><img src="man/figures/README-unnamed-chunk-23-61.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" />
 
 ``` r
 fit_MMRsaturation_model %>% 
@@ -535,188 +531,188 @@ fit_MMRsaturation_model %>%
 #> Calculating summary statistics...
 #> Calculating the Gelman-Rubin statistic for 60 variables....
 #>                                 Lower95        Median       Upper95
-#> mu_wt[1]                   2.307585e-10  2.811691e-10  3.322264e-10
-#> mu_wt[2]                   3.917682e-11  6.051465e-11  8.304881e-11
-#> mu_wt[3]                   8.911735e-12  2.119623e-11  3.565878e-11
-#> mu_wt[4]                   1.825790e-10  2.208423e-10  2.613459e-10
-#> mu_wt[5]                   2.946204e-11  4.646104e-11  6.390682e-11
-#> mu_wt[6]                   3.356782e-11  5.047552e-11  7.153012e-11
-#> mu_proofminus[1]           5.755353e-08  6.467431e-08  7.271714e-08
-#> mu_proofminus[2]           2.924613e-09  4.995909e-09  7.363854e-09
-#> mu_proofminus[3]           1.767426e-10  7.247423e-10  1.509977e-09
-#> mu_proofminus[4]           3.182831e-08  3.627732e-08  4.120346e-08
-#> mu_proofminus[5]           2.071267e-09  3.293017e-09  4.706703e-09
-#> mu_proofminus[6]           1.236887e-09  2.221705e-09  3.509275e-09
-#> mu_MMRminus[1]             3.671010e-08  3.829456e-08  3.978872e-08
-#> mu_MMRminus[2]             9.678963e-11  1.909986e-10  2.925078e-10
-#> mu_MMRminus[3]             2.094436e-10  3.361830e-10  4.860672e-10
-#> mu_MMRminus[4]             2.710480e-08  2.825866e-08  2.944303e-08
-#> mu_MMRminus[5]             5.533138e-10  7.162860e-10  9.188930e-10
-#> mu_MMRminus[6]             3.317365e-10  4.668865e-10  6.285924e-10
-#> mu_MMRproofminus[1]        6.540524e-07  7.298604e-07  8.071273e-07
-#> mu_MMRproofminus[2]        6.829707e-09  1.327370e-08  2.136211e-08
-#> mu_MMRproofminus[3]        1.163279e-09  5.098432e-09  1.061220e-08
-#> mu_MMRproofminus[4]        3.599612e-07  4.062866e-07  4.568143e-07
-#> mu_MMRproofminus[5]        1.450577e-08  2.330339e-08  3.335090e-08
-#> mu_MMRproofminus[6]        6.406108e-09  1.215817e-08  1.927722e-08
-#> log10_mean_wt             -1.054625e+01 -1.011072e+01 -9.638914e+00
-#> log10_mean_MMRminus       -9.556290e+00 -8.765302e+00 -7.896746e+00
-#> log10_mean_MMRproofminus  -8.147361e+00 -7.387390e+00 -6.617328e+00
-#> log10_sigma_wt             2.291374e-01  4.804070e-01  8.982956e-01
-#> log10_sigma_MMRminus       5.652758e-01  9.574962e-01  1.617893e+00
-#> log10_sigma_MMRproofminus  4.797815e-01  8.674121e-01  1.455890e+00
-#> theta4                     7.048522e-02  8.203692e-02  9.474278e-02
-#> log10_mean_prior          -1.387868e+01 -8.005041e+00 -2.093905e+00
-#> log10_sigma_prior          1.769927e-04  4.243141e-01  1.470650e+00
-#> log10_mu_prior            -1.403104e+01 -7.997238e+00 -2.034219e+00
-#> theta4_prior               3.089441e-02  5.022900e-01  9.744281e-01
-#> m_wt_pred[1]               8.700000e+01  1.170000e+02  1.460000e+02
+#> mu_wt[1]                   2.319737e-10  2.805517e-10  3.333281e-10
+#> mu_wt[2]                   4.020673e-11  6.013787e-11  8.464137e-11
+#> mu_wt[3]                   9.523458e-12  2.096973e-11  3.582148e-11
+#> mu_wt[4]                   1.818733e-10  2.201120e-10  2.610554e-10
+#> mu_wt[5]                   3.048891e-11  4.626423e-11  6.514124e-11
+#> mu_wt[6]                   3.391805e-11  5.045271e-11  7.016785e-11
+#> mu_proofminus[1]           5.689379e-08  6.466949e-08  7.224961e-08
+#> mu_proofminus[2]           3.025031e-09  5.012935e-09  7.471035e-09
+#> mu_proofminus[3]           1.722407e-10  7.318250e-10  1.519398e-09
+#> mu_proofminus[4]           3.167510e-08  3.626778e-08  4.115815e-08
+#> mu_proofminus[5]           2.125790e-09  3.320537e-09  4.752809e-09
+#> mu_proofminus[6]           1.130549e-09  2.212426e-09  3.430021e-09
+#> mu_MMRminus[1]             3.681826e-08  3.829187e-08  3.987386e-08
+#> mu_MMRminus[2]             1.007386e-10  1.890770e-10  2.960109e-10
+#> mu_MMRminus[3]             2.041492e-10  3.369981e-10  4.856705e-10
+#> mu_MMRminus[4]             2.709532e-08  2.826071e-08  2.939754e-08
+#> mu_MMRminus[5]             5.395248e-10  7.172403e-10  8.985671e-10
+#> mu_MMRminus[6]             3.309799e-10  4.640555e-10  6.220455e-10
+#> mu_MMRproofminus[1]        6.571874e-07  7.290655e-07  8.091372e-07
+#> mu_MMRproofminus[2]        6.967082e-09  1.328221e-08  2.158305e-08
+#> mu_MMRproofminus[3]        1.210026e-09  5.235682e-09  1.077328e-08
+#> mu_MMRproofminus[4]        3.625000e-07  4.074955e-07  4.586586e-07
+#> mu_MMRproofminus[5]        1.471051e-08  2.325813e-08  3.370842e-08
+#> mu_MMRproofminus[6]        6.281081e-09  1.206100e-08  1.921639e-08
+#> log10_mean_wt             -1.058437e+01 -1.011088e+01 -9.682178e+00
+#> log10_mean_MMRminus       -9.569483e+00 -8.758980e+00 -7.927872e+00
+#> log10_mean_MMRproofminus  -8.134109e+00 -7.382121e+00 -6.580994e+00
+#> log10_sigma_wt             2.332630e-01  4.821714e-01  8.808577e-01
+#> log10_sigma_MMRminus       5.262165e-01  9.590418e-01  1.569814e+00
+#> log10_sigma_MMRproofminus  4.826015e-01  8.611181e-01  1.454626e+00
+#> theta4                     7.003505e-02  8.186476e-02  9.514560e-02
+#> log10_mean_prior          -1.404947e+01 -8.110199e+00 -2.286707e+00
+#> log10_sigma_prior          2.050898e-04  4.178389e-01  1.486792e+00
+#> log10_mu_prior            -1.413478e+01 -8.112506e+00 -2.052095e+00
+#> theta4_prior               5.483254e-02  5.062389e-01  9.999854e-01
+#> m_wt_pred[1]               8.500000e+01  1.170000e+02  1.450000e+02
 #> m_wt_pred[2]               1.100000e+01  2.500000e+01  3.800000e+01
-#> m_wt_pred[3]               2.000000e+00  9.000000e+00  1.700000e+01
-#> m_wt_pred[4]               8.800000e+01  1.180000e+02  1.470000e+02
+#> m_wt_pred[3]               2.000000e+00  8.000000e+00  1.700000e+01
+#> m_wt_pred[4]               8.700000e+01  1.180000e+02  1.470000e+02
 #> m_wt_pred[5]               1.200000e+01  2.500000e+01  3.800000e+01
-#> m_wt_pred[6]               1.400000e+01  2.700000e+01  4.200000e+01
-#> m_proofminus_pred[1]       1.660000e+02  2.040000e+02  2.400000e+02
+#> m_wt_pred[6]               1.200000e+01  2.700000e+01  4.000000e+01
+#> m_proofminus_pred[1]       1.650000e+02  2.030000e+02  2.380000e+02
 #> m_proofminus_pred[2]       5.000000e+00  1.600000e+01  2.600000e+01
 #> m_proofminus_pred[3]       0.000000e+00  2.000000e+00  6.000000e+00
-#> m_proofminus_pred[4]       1.170000e+02  1.460000e+02  1.770000e+02
-#> m_proofminus_pred[5]       5.000000e+00  1.300000e+01  2.200000e+01
+#> m_proofminus_pred[4]       1.180000e+02  1.460000e+02  1.790000e+02
+#> m_proofminus_pred[5]       4.000000e+00  1.300000e+01  2.200000e+01
 #> m_proofminus_pred[6]       2.000000e+00  9.000000e+00  1.600000e+01
-#> m_MMRminus_pred[1]         2.279000e+03  2.416500e+03  2.551000e+03
+#> m_MMRminus_pred[1]         2.283000e+03  2.417000e+03  2.550000e+03
 #> m_MMRminus_pred[2]         3.000000e+00  1.200000e+01  2.100000e+01
-#> m_MMRminus_pred[3]         1.000000e+01  2.100000e+01  3.400000e+01
-#> m_MMRminus_pred[4]         2.151000e+03  2.291000e+03  2.419000e+03
-#> m_MMRminus_pred[5]         3.700000e+01  5.800000e+01  7.800000e+01
-#> m_MMRminus_pred[6]         2.100000e+01  3.800000e+01  5.400000e+01
-#> m_MMRproofminus_pred[1]    2.360000e+02  2.790000e+02  3.220000e+02
+#> m_MMRminus_pred[3]         9.000000e+00  2.100000e+01  3.400000e+01
+#> m_MMRminus_pred[4]         2.166000e+03  2.292000e+03  2.430000e+03
+#> m_MMRminus_pred[5]         3.600000e+01  5.800000e+01  7.800000e+01
+#> m_MMRminus_pred[6]         2.200000e+01  3.800000e+01  5.500000e+01
+#> m_MMRproofminus_pred[1]    2.360000e+02  2.800000e+02  3.230000e+02
 #> m_MMRproofminus_pred[2]    0.000000e+00  5.000000e+00  1.000000e+01
 #> m_MMRproofminus_pred[3]    0.000000e+00  2.000000e+00  5.000000e+00
 #> m_MMRproofminus_pred[4]    1.630000e+02  2.000000e+02  2.360000e+02
-#> m_MMRproofminus_pred[5]    4.000000e+00  1.100000e+01  1.900000e+01
+#> m_MMRproofminus_pred[5]    3.000000e+00  1.100000e+01  1.900000e+01
 #> m_MMRproofminus_pred[6]    1.000000e+00  6.000000e+00  1.200000e+01
-#> loglikelihood             -1.112223e+01 -1.001886e+01 -9.181974e+00
+#> loglikelihood             -1.110589e+01 -1.001143e+01 -9.099817e+00
 #>                                    Mean           SD         Mode        MCerr
-#> mu_wt[1]                   2.814967e-10 2.602430e-11 2.007796e-10          Inf
-#> mu_wt[2]                   6.125354e-11 1.145955e-11 2.801486e-11          Inf
-#> mu_wt[3]                   2.177819e-11 7.039639e-12 4.581908e-12          Inf
-#> mu_wt[4]                   2.211369e-10 2.016750e-11 1.556073e-10          Inf
-#> mu_wt[5]                   4.692413e-11 9.021726e-12 1.589314e-11          Inf
-#> mu_wt[6]                   5.116844e-11 9.754023e-12 2.149380e-11          Inf
-#> mu_proofminus[1]           6.480362e-08 3.896569e-09           NA          Inf
-#> mu_proofminus[2]           5.099721e-09 1.162562e-09 1.810998e-09          Inf
-#> mu_proofminus[3]           7.810712e-10 3.639757e-10 7.154144e-11          Inf
-#> mu_proofminus[4]           3.634115e-08 2.425560e-09           NA          Inf
-#> mu_proofminus[5]           3.362838e-09 6.902145e-10 1.421749e-09          Inf
-#> mu_proofminus[6]           2.277133e-09 5.924878e-10 7.464575e-10          Inf
-#> mu_MMRminus[1]             3.830363e-08 7.812252e-10           NA          Inf
-#> mu_MMRminus[2]             1.951961e-10 5.116831e-11 6.734881e-11          Inf
-#> mu_MMRminus[3]             3.422228e-10 7.226359e-11 1.456214e-10          Inf
-#> mu_MMRminus[4]             2.825626e-08 6.027923e-10           NA          Inf
-#> mu_MMRminus[5]             7.216167e-10 9.396745e-11 4.336492e-10          Inf
-#> mu_MMRminus[6]             4.721812e-10 7.652083e-11 2.530481e-10          Inf
-#> mu_MMRproofminus[1]        7.298647e-07 3.959429e-08           NA 5.103003e-10
-#> mu_MMRproofminus[2]        1.366692e-08 3.860337e-09           NA          Inf
-#> mu_MMRproofminus[3]        5.533016e-09 2.584977e-09           NA          Inf
-#> mu_MMRproofminus[4]        4.072716e-07 2.482852e-08           NA 3.164529e-10
-#> mu_MMRproofminus[5]        2.367343e-08 4.884699e-09           NA          Inf
-#> mu_MMRproofminus[6]        1.250024e-08 3.349423e-09           NA          Inf
-#> log10_mean_wt             -1.011019e+01 2.295349e-01           NA 2.600123e-03
-#> log10_mean_MMRminus       -8.764995e+00 4.217049e-01           NA 4.749073e-03
-#> log10_mean_MMRproofminus  -7.392879e+00 3.855991e-01           NA 4.363710e-03
-#> log10_sigma_wt             5.188817e-01 1.900524e-01           NA 2.641281e-03
-#> log10_sigma_MMRminus       1.011685e+00 2.921251e-01           NA 3.943316e-03
-#> log10_sigma_MMRproofminus  9.169523e-01 2.718719e-01           NA 3.532817e-03
-#> theta4                     8.222793e-02 6.269176e-03           NA 8.645689e-05
-#> log10_mean_prior          -8.006431e+00 3.017915e+00           NA 3.374131e-02
-#> log10_sigma_prior          5.486517e-01 5.001631e-01           NA 5.591994e-03
-#> log10_mu_prior            -8.004745e+00 3.094631e+00           NA 3.459902e-02
-#> theta4_prior               5.002256e-01 2.866353e-01           NA 3.204680e-03
-#> m_wt_pred[1]               1.174284e+02 1.522223e+01 1.180000e+02 1.708491e-01
-#> m_wt_pred[2]               2.561275e+01 6.959047e+00 2.600000e+01 7.901423e-02
-#> m_wt_pred[3]               9.072875e+00 4.232086e+00 7.000000e+00 4.881631e-02
-#> m_wt_pred[4]               1.184838e+02 1.519209e+01 1.180000e+02 1.698527e-01
-#> m_wt_pred[5]               2.497638e+01 6.968923e+00 2.200000e+01 7.781437e-02
-#> m_wt_pred[6]               2.735725e+01 7.443020e+00 2.700000e+01 8.321549e-02
-#> m_proofminus_pred[1]       2.040289e+02 1.895920e+01 2.000000e+02 2.119703e-01
-#> m_proofminus_pred[2]       1.604638e+01 5.498614e+00 1.300000e+01 6.147637e-02
-#> m_proofminus_pred[3]       2.464875e+00 1.960229e+00 2.000000e+00 2.191602e-02
-#> m_proofminus_pred[4]       1.466562e+02 1.564425e+01 1.470000e+02 1.707707e-01
-#> m_proofminus_pred[5]       1.358300e+01 4.579845e+00 1.300000e+01 4.828966e-02
-#> m_proofminus_pred[6]       9.241625e+00 3.887625e+00 8.000000e+00 4.230229e-02
-#> m_MMRminus_pred[1]         2.417616e+03 6.918659e+01 2.415000e+03 7.835274e-01
-#> m_MMRminus_pred[2]         1.237663e+01 4.789170e+00 1.000000e+01 5.735109e-02
-#> m_MMRminus_pred[3]         2.158150e+01 6.452330e+00 2.100000e+01 7.101896e-02
-#> m_MMRminus_pred[4]         2.291191e+03 6.873462e+01 2.292000e+03 7.597517e-01
-#> m_MMRminus_pred[5]         5.839100e+01 1.067787e+01 5.800000e+01 1.197276e-01
-#> m_MMRminus_pred[6]         3.828988e+01 8.728380e+00 3.800000e+01 1.032793e-01
-#> m_MMRproofminus_pred[1]    2.794747e+02 2.254517e+01 2.840000e+02 2.670139e-01
-#> m_MMRproofminus_pred[2]    5.211500e+00 2.691129e+00 4.000000e+00 3.284298e-02
-#> m_MMRproofminus_pred[3]    2.086500e+00 1.737281e+00 1.000000e+00 1.942339e-02
-#> m_MMRproofminus_pred[4]    2.004674e+02 1.870098e+01 2.020000e+02 2.231565e-01
-#> m_MMRproofminus_pred[5]    1.163200e+01 4.097002e+00 1.000000e+01 4.643124e-02
-#> m_MMRproofminus_pred[6]    6.205625e+00 2.986797e+00 5.000000e+00 3.378815e-02
-#> loglikelihood             -1.006968e+01 5.123019e-01           NA 6.071871e-03
+#> mu_wt[1]                   2.812666e-10 2.609427e-11 1.955085e-10          Inf
+#> mu_wt[2]                   6.094489e-11 1.152010e-11 2.690342e-11          Inf
+#> mu_wt[3]                   2.165710e-11 6.928706e-12 4.880494e-12          Inf
+#> mu_wt[4]                   2.208716e-10 2.038386e-11 1.520201e-10          Inf
+#> mu_wt[5]                   4.704917e-11 9.014261e-12 1.815064e-11          Inf
+#> mu_wt[6]                   5.118714e-11 9.465765e-12 2.178262e-11          Inf
+#> mu_proofminus[1]           6.475921e-08 3.976790e-09           NA          Inf
+#> mu_proofminus[2]           5.112709e-09 1.156008e-09 1.881662e-09          Inf
+#> mu_proofminus[3]           7.880761e-10 3.664566e-10 3.921636e-11          Inf
+#> mu_proofminus[4]           3.634283e-08 2.443337e-09           NA          Inf
+#> mu_proofminus[5]           3.361434e-09 6.885851e-10 1.319377e-09          Inf
+#> mu_proofminus[6]           2.269283e-09 6.002067e-10 6.900236e-10          Inf
+#> mu_MMRminus[1]             3.829306e-08 7.761509e-10           NA          Inf
+#> mu_MMRminus[2]             1.941415e-10 5.125821e-11 6.649447e-11          Inf
+#> mu_MMRminus[3]             3.424925e-10 7.336915e-11 1.305927e-10          Inf
+#> mu_MMRminus[4]             2.826877e-08 5.926066e-10           NA          Inf
+#> mu_MMRminus[5]             7.206391e-10 9.223960e-11 4.012494e-10          Inf
+#> mu_MMRminus[6]             4.690869e-10 7.581991e-11 2.020792e-10          Inf
+#> mu_MMRproofminus[1]        7.300599e-07 3.906134e-08           NA 5.054774e-10
+#> mu_MMRproofminus[2]        1.371709e-08 3.902208e-09           NA          Inf
+#> mu_MMRproofminus[3]        5.595958e-09 2.616311e-09           NA          Inf
+#> mu_MMRproofminus[4]        4.077563e-07 2.489885e-08           NA 3.201302e-10
+#> mu_MMRproofminus[5]        2.364332e-08 4.914758e-09           NA          Inf
+#> mu_MMRproofminus[6]        1.241422e-08 3.388701e-09           NA          Inf
+#> log10_mean_wt             -1.011003e+01 2.222820e-01           NA 2.408500e-03
+#> log10_mean_MMRminus       -8.759222e+00 4.139085e-01           NA 4.562723e-03
+#> log10_mean_MMRproofminus  -7.387007e+00 3.900132e-01           NA 4.360480e-03
+#> log10_sigma_wt             5.192794e-01 1.852319e-01           NA 2.660443e-03
+#> log10_sigma_MMRminus       1.009511e+00 2.869501e-01           NA 3.627894e-03
+#> log10_sigma_MMRproofminus  9.141557e-01 2.765872e-01           NA 3.944370e-03
+#> theta4                     8.214723e-02 6.441805e-03           NA 9.056633e-05
+#> log10_mean_prior          -8.086714e+00 3.015130e+00           NA 3.169297e-02
+#> log10_sigma_prior          5.446705e-01 5.093683e-01           NA 5.694910e-03
+#> log10_mu_prior            -8.085269e+00 3.088948e+00           NA 3.412793e-02
+#> theta4_prior               5.050175e-01 2.862870e-01           NA 3.200786e-03
+#> m_wt_pred[1]               1.173326e+02 1.532692e+01 1.150000e+02 1.766590e-01
+#> m_wt_pred[2]               2.537425e+01 6.943808e+00 2.400000e+01 8.101092e-02
+#> m_wt_pred[3]               8.956375e+00 4.206654e+00 7.000000e+00 4.703182e-02
+#> m_wt_pred[4]               1.184005e+02 1.541359e+01 1.170000e+02 1.842355e-01
+#> m_wt_pred[5]               2.523075e+01 6.885850e+00 2.500000e+01 7.698614e-02
+#> m_wt_pred[6]               2.741737e+01 7.282242e+00 2.600000e+01 8.287663e-02
+#> m_proofminus_pred[1]       2.037340e+02 1.905284e+01 2.020000e+02 2.209837e-01
+#> m_proofminus_pred[2]       1.603637e+01 5.437095e+00 1.300000e+01 6.219545e-02
+#> m_proofminus_pred[3]       2.477375e+00 1.954153e+00 1.000000e+00 2.184810e-02
+#> m_proofminus_pred[4]       1.469670e+02 1.574149e+01 1.440000e+02 1.759953e-01
+#> m_proofminus_pred[5]       1.361250e+01 4.661283e+00 1.300000e+01 5.553725e-02
+#> m_proofminus_pred[6]       9.177000e+00 3.890284e+00 9.000000e+00 4.349470e-02
+#> m_MMRminus_pred[1]         2.417387e+03 6.902064e+01 2.411000e+03 7.716743e-01
+#> m_MMRminus_pred[2]         1.221612e+01 4.754444e+00 1.000000e+01 5.727315e-02
+#> m_MMRminus_pred[3]         2.164075e+01 6.583757e+00 1.900000e+01 7.360864e-02
+#> m_MMRminus_pred[4]         2.292356e+03 6.786253e+01 2.285000e+03 7.587261e-01
+#> m_MMRminus_pred[5]         5.837237e+01 1.074481e+01 5.700000e+01 1.201306e-01
+#> m_MMRminus_pred[6]         3.808212e+01 8.779110e+00 3.500000e+01 1.008800e-01
+#> m_MMRproofminus_pred[1]    2.797666e+02 2.250055e+01 2.830000e+02 2.677558e-01
+#> m_MMRproofminus_pred[2]    5.238875e+00 2.743220e+00 5.000000e+00 3.255478e-02
+#> m_MMRproofminus_pred[3]    2.157875e+00 1.752736e+00 1.000000e+00 1.959619e-02
+#> m_MMRproofminus_pred[4]    2.005884e+02 1.880124e+01 2.000000e+02 2.248316e-01
+#> m_MMRproofminus_pred[5]    1.167775e+01 4.194711e+00 1.000000e+01 4.796742e-02
+#> m_MMRproofminus_pred[6]    6.152375e+00 2.977753e+00 5.000000e+00 3.329229e-02
+#> loglikelihood             -1.007070e+01 5.251627e-01           NA 6.236941e-03
 #>                           MC%ofSD SSeff         AC.30      psrf
-#> mu_wt[1]                      Inf     0 -2.946597e-02 1.0003099
-#> mu_wt[2]                      Inf     0  3.750862e-03 1.0004573
-#> mu_wt[3]                      Inf     0  2.420929e-02 0.9998765
-#> mu_wt[4]                      Inf     0 -1.342903e-03 1.0002440
-#> mu_wt[5]                      Inf     0  7.564016e-03 1.0007003
-#> mu_wt[6]                      Inf     0  1.096221e-02 0.9999121
-#> mu_proofminus[1]              Inf     0  5.799242e-03 1.0002279
-#> mu_proofminus[2]              Inf     0 -7.545644e-03 1.0003765
-#> mu_proofminus[3]              Inf     0  1.182367e-02 0.9998907
-#> mu_proofminus[4]              Inf     0  6.779132e-03 1.0003337
-#> mu_proofminus[5]              Inf     0  1.552604e-02 1.0003245
-#> mu_proofminus[6]              Inf     0  7.048789e-03 1.0001475
-#> mu_MMRminus[1]                Inf     0  8.041274e-03 0.9999387
-#> mu_MMRminus[2]                Inf     0 -6.186404e-03 1.0011597
-#> mu_MMRminus[3]                Inf     0 -1.529757e-03 1.0004817
-#> mu_MMRminus[4]                Inf     0 -1.320559e-02 1.0005902
-#> mu_MMRminus[5]                Inf     0 -9.715319e-05 1.0004123
-#> mu_MMRminus[6]                Inf     0 -2.009889e-02 1.0002837
-#> mu_MMRproofminus[1]           1.3  6020  1.136209e-03 1.0012590
-#> mu_MMRproofminus[2]           Inf     0  4.371832e-03 1.0001183
-#> mu_MMRproofminus[3]           Inf     0  1.001810e-02 0.9999132
-#> mu_MMRproofminus[4]           1.3  6156  1.013195e-02 1.0000259
-#> mu_MMRproofminus[5]           Inf     0  1.586450e-02 1.0005084
-#> mu_MMRproofminus[6]           Inf     0  7.831744e-03 1.0000829
-#> log10_mean_wt                 1.1  7793 -1.091477e-03 0.9999483
-#> log10_mean_MMRminus           1.1  7885 -1.244360e-02 0.9999494
-#> log10_mean_MMRproofminus      1.1  7808 -5.352689e-04 1.0006465
-#> log10_sigma_wt                1.4  5177  6.402760e-03 0.9999524
-#> log10_sigma_MMRminus          1.3  5488  2.736877e-02 1.0005993
-#> log10_sigma_MMRproofminus     1.3  5922 -1.782909e-02 0.9999241
-#> theta4                        1.4  5258  9.536842e-03 1.0003381
-#> log10_mean_prior              1.1  8000  5.464860e-04 1.0002528
-#> log10_sigma_prior             1.1  8000  8.405398e-04 1.0003071
-#> log10_mu_prior                1.1  8000 -1.939420e-03 1.0003833
-#> theta4_prior                  1.1  8000  1.092449e-02 0.9999148
-#> m_wt_pred[1]                  1.1  7938 -2.273546e-02 1.0000063
-#> m_wt_pred[2]                  1.1  7757 -9.426338e-03 1.0009750
-#> m_wt_pred[3]                  1.2  7516  1.148881e-03 0.9999268
-#> m_wt_pred[4]                  1.1  8000 -1.105200e-02 0.9998810
-#> m_wt_pred[5]                  1.1  8021 -1.562197e-02 0.9999787
-#> m_wt_pred[6]                  1.1  8000  1.110893e-02 1.0003213
-#> m_proofminus_pred[1]          1.1  8000  1.255096e-03 1.0001604
-#> m_proofminus_pred[2]          1.1  8000 -1.636376e-02 0.9999963
-#> m_proofminus_pred[3]          1.1  8000 -3.175744e-03 0.9999248
-#> m_proofminus_pred[4]          1.1  8392  3.011090e-02 1.0013467
-#> m_proofminus_pred[5]          1.1  8995  1.974120e-02 0.9998840
-#> m_proofminus_pred[6]          1.1  8446  1.738087e-02 1.0002628
-#> m_MMRminus_pred[1]            1.1  7797  1.660613e-03 1.0006163
-#> m_MMRminus_pred[2]            1.2  6973 -3.410387e-03 1.0017681
-#> m_MMRminus_pred[3]            1.1  8254  6.138842e-03 0.9999738
-#> m_MMRminus_pred[4]            1.1  8185 -4.440170e-03 1.0004150
-#> m_MMRminus_pred[5]            1.1  7954  4.208243e-03 1.0000462
-#> m_MMRminus_pred[6]            1.2  7142 -1.698521e-02 1.0000151
-#> m_MMRproofminus_pred[1]       1.2  7129 -1.390626e-02 1.0007908
-#> m_MMRproofminus_pred[2]       1.2  6714 -2.368853e-03 1.0000059
-#> m_MMRproofminus_pred[3]       1.1  8000 -6.670843e-03 1.0000005
-#> m_MMRproofminus_pred[4]       1.2  7023  9.855711e-03 0.9999903
-#> m_MMRproofminus_pred[5]       1.1  7786 -3.531085e-03 1.0000864
-#> m_MMRproofminus_pred[6]       1.1  7814  9.665701e-03 1.0000918
-#> loglikelihood                 1.2  7119 -6.918217e-04 1.0006009
+#> mu_wt[1]                      Inf     0 -8.331133e-03 0.9999356
+#> mu_wt[2]                      Inf     0 -2.957342e-03 1.0003352
+#> mu_wt[3]                      Inf     0  1.650429e-02 0.9999776
+#> mu_wt[4]                      Inf     0  1.950419e-02 1.0004964
+#> mu_wt[5]                      Inf     0  2.864284e-02 1.0001427
+#> mu_wt[6]                      Inf     0  1.056009e-02 1.0001458
+#> mu_proofminus[1]              Inf     0 -1.368480e-02 1.0002003
+#> mu_proofminus[2]              Inf     0  3.129713e-03 1.0008406
+#> mu_proofminus[3]              Inf     0 -8.760059e-03 1.0012076
+#> mu_proofminus[4]              Inf     0 -6.824937e-03 1.0000452
+#> mu_proofminus[5]              Inf     0  2.965672e-03 0.9999302
+#> mu_proofminus[6]              Inf     0  3.471410e-03 1.0007780
+#> mu_MMRminus[1]                Inf     0  1.027597e-02 1.0004235
+#> mu_MMRminus[2]                Inf     0  5.988439e-03 1.0002984
+#> mu_MMRminus[3]                Inf     0  7.590804e-03 1.0001931
+#> mu_MMRminus[4]                Inf     0  1.857384e-02 0.9998771
+#> mu_MMRminus[5]                Inf     0 -1.835841e-02 0.9999426
+#> mu_MMRminus[6]                Inf     0  3.717450e-02 1.0004058
+#> mu_MMRproofminus[1]           1.3  5972 -1.765419e-02 1.0004080
+#> mu_MMRproofminus[2]           Inf     0 -1.186330e-02 1.0004088
+#> mu_MMRproofminus[3]           Inf     0 -1.013736e-02 1.0011583
+#> mu_MMRproofminus[4]           1.3  6049  8.219139e-03 0.9999857
+#> mu_MMRproofminus[5]           Inf     0  4.138820e-03 0.9999020
+#> mu_MMRproofminus[6]           Inf     0  1.864982e-02 0.9999336
+#> log10_mean_wt                 1.1  8518 -2.385154e-02 1.0008587
+#> log10_mean_MMRminus           1.1  8229  4.115650e-03 0.9999396
+#> log10_mean_MMRproofminus      1.1  8000 -6.770418e-03 0.9998762
+#> log10_sigma_wt                1.4  4848  1.469630e-02 0.9999581
+#> log10_sigma_MMRminus          1.3  6256  2.167384e-02 1.0003239
+#> log10_sigma_MMRproofminus     1.4  4917 -2.764774e-02 1.0010621
+#> theta4                        1.4  5059 -1.298522e-02 1.0003120
+#> log10_mean_prior              1.1  9051  3.302569e-03 1.0000848
+#> log10_sigma_prior             1.1  8000 -1.110158e-02 1.0004010
+#> log10_mu_prior                1.1  8192  3.844898e-03 1.0000139
+#> theta4_prior                  1.1  8000 -1.100546e-02 1.0001324
+#> m_wt_pred[1]                  1.2  7527  4.070673e-03 1.0009727
+#> m_wt_pred[2]                  1.2  7347 -8.470873e-03 1.0003681
+#> m_wt_pred[3]                  1.1  8000  9.537739e-03 0.9999535
+#> m_wt_pred[4]                  1.2  6999  1.344584e-02 1.0001003
+#> m_wt_pred[5]                  1.1  8000  1.915474e-02 1.0004049
+#> m_wt_pred[6]                  1.1  7721  1.286802e-02 1.0002480
+#> m_proofminus_pred[1]          1.2  7434 -2.286425e-02 1.0004527
+#> m_proofminus_pred[2]          1.1  7642  5.517018e-03 1.0002499
+#> m_proofminus_pred[3]          1.1  8000 -7.112717e-03 1.0011270
+#> m_proofminus_pred[4]          1.1  8000 -9.203639e-03 1.0000249
+#> m_proofminus_pred[5]          1.2  7044  1.555872e-02 1.0003228
+#> m_proofminus_pred[6]          1.1  8000 -1.504450e-03 1.0002646
+#> m_MMRminus_pred[1]            1.1  8000  1.463674e-02 1.0003327
+#> m_MMRminus_pred[2]            1.2  6891  7.807436e-03 0.9999776
+#> m_MMRminus_pred[3]            1.1  8000  1.683589e-03 0.9999445
+#> m_MMRminus_pred[4]            1.1  8000  5.574090e-03 0.9999582
+#> m_MMRminus_pred[5]            1.1  8000 -4.117237e-03 1.0001322
+#> m_MMRminus_pred[6]            1.1  7573  8.607904e-03 1.0005060
+#> m_MMRproofminus_pred[1]       1.2  7062  1.660871e-04 1.0000284
+#> m_MMRproofminus_pred[2]       1.2  7101 -2.387523e-05 1.0000524
+#> m_MMRproofminus_pred[3]       1.1  8000 -8.834158e-03 1.0009183
+#> m_MMRproofminus_pred[4]       1.2  6993  1.181100e-02 1.0007702
+#> m_MMRproofminus_pred[5]       1.1  7647  1.079666e-02 1.0007339
+#> m_MMRproofminus_pred[6]       1.1  8000 -2.334791e-03 1.0002756
+#> loglikelihood                 1.2  7090  1.252002e-03 1.0003206
 ```
 
 ``` r
@@ -733,16 +729,16 @@ fit_MMRsaturation_model %>%
 #> # A tibble: 24 × 18
 #>    m_pred_mean m_pred_median m_pred_infCI m_pred_supCI m_pred_infquart
 #>          <dbl>         <dbl>        <dbl>        <dbl>           <dbl>
-#>  1      117.             117           89          149             107
-#>  2       25.6             25           13           40              21
-#>  3        9.07             9            2           19               6
-#>  4      118.             118           89          150             108
-#>  5       25.0             25           13           40              20
-#>  6       27.4             27           14           43              22
-#>  7      204.             204          168          243             191
-#>  8       16.0             16            7           28              12
-#>  9        2.46             2            0            7               1
-#> 10      147.             146          117          178             136
+#>  1      117.             117           89        149               107
+#>  2       25.4             25           13         40                20
+#>  3        8.96             8            2         18.0               6
+#>  4      118.             118           89        150               108
+#>  5       25.2             25           13         40                20
+#>  6       27.4             27           15         43                22
+#>  7      204.             203          168        242               190
+#>  8       16.0             16            7         28                12
+#>  9        2.48             2            0          7                 1
+#> 10      147.             146          118        179               136
 #> # ℹ 14 more rows
 #> # ℹ 13 more variables: m_pred_supquart <dbl>, colnam <chr>, strain <chr>,
 #> #   mutation_id <dbl>, genotype <chr>, mutation_label <chr>, nposinref <int>,

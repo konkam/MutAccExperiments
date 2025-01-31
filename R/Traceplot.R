@@ -7,7 +7,7 @@
 #'
 #' @examples
 traceplot = function(fit){
-  if(fit$model_type == "saturation" | fit$model_type == "GCM_one_strain"){
+  if(fit$model_type == "MMRsaturation" | fit$model_type == "GCM_one_strain"){
     fit %>% 
       extract_posterior_samples(type="hyperparameters")  %>% 
       tidyr::pivot_longer(cols = -c(chain_id, iteration), names_to = "parameter", values_to = "value") %>%
