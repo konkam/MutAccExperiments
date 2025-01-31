@@ -61,7 +61,19 @@ library(tidyverse)
 ```
 
 ```{r}
-input_data = read.delim(file = "data-raw/SAT_mcmc_chain_labmut_R3610MMR-3610_inputfile.csv", sep = " ")
+input_data = read.delim(file = "data-raw/SAT_mcmc_chain_labmut_R3610MMR-3610_inputfile.csv", sep = " ") %>% 
+  rename(mutation_id = context_id,
+         m = m_sc, 
+         n = n_c,
+         t = t_s, 
+         mutation_label = labmut) %>% 
+  mutate(strain = gsub("MMR-", "MMRminus", strain))  %>%
+  mutate(strain = gsub("WT3610", "wt", strain)) %>% 
+  mutate(strain = gsub("polC_mutL", "MMRproofminus", strain)) %>% 
+  mutate(strain = gsub("polC", "proofminus", strain))
+
+input_data_onestrain = input_data %>% 
+  filter(strain == first(strain)) 
 ```
 
 The minimum data required to run the analysis is a data frame with the following columns:
@@ -69,16 +81,12 @@ The minimum data required to run the analysis is a data frame with the following
 ```{r}
 minimal_input_data_onestrain = input_data %>% 
   filter(strain == first(strain)) %>% 
-  rename(mutation_type = context_id,
-         m = m_sc, 
-         n = n_c,
-         t = t_s) %>% 
-  select(mutation_type, m, n, t) 
+  select(mutation_id, m, n, t) 
 minimal_input_data_onestrain
 ```
 
 ```{r}
-minimal_input_data_onestrain %>% 
+input_data_onestrain %>% 
   check_input_format_GCM()
 ```
 
@@ -86,7 +94,7 @@ minimal_input_data_onestrain %>%
 # Fitting the GCM model
 
 ```{r}
-fit_GCM_model = minimal_input_data_onestrain %>% 
+fit_GCM_model = input_data_onestrain %>% 
   EstimateMusGCM_onestrain()
 ```
 
@@ -135,40 +143,39 @@ fit_GCM_model %>%
 ```
 
 ```{r}
-posterior_predictive_one_strain(minimal_input_data_onestrain, fit_GCM_model)
+posterior_predictive_one_strain(fit_GCM_model)
+```
+```{r}
+plot_posterior_predictive_onestrain(fit_GCM_model)
 ```
 
-# Fitting the model with saturation
+
+# Fitting the model with MMR saturation
 
 ```{r}
 minimal_input_data = input_data %>% 
-  rename(mutation_type = context_id,
-         m = m_sc, 
-         n = n_c,
-         t = t_s)  %>% 
-  mutate(strain = gsub("WT3610", "wt", strain)) %>% 
-  select(strain, mutation_type, m, n, t) 
+  select(strain, mutation_id, m, n, t) 
 
 minimal_input_data
 
 ```
 
 ```{r}
-fit_Saturation_model = EstimateMusSaturation(minimal_input_data)
+fit_MMRsaturation_model = EstimateMusMMRsaturation(input_data)
 ```
 
 ## Accessing posterior samples
 
 ```{r}
-extract_posterior_samples(fit_Saturation_model, type = "mu")
+extract_posterior_samples(fit_MMRsaturation_model, type = "mu")
 ```
 
 ```{r}
-extract_posterior_samples(fit_Saturation_model, type = "hyperparameters")
+extract_posterior_samples(fit_MMRsaturation_model, type = "hyperparameters")
 ```
 
 ```{r}
-extract_posterior_samples(fit_Saturation_model, type = "predictive")
+extract_posterior_samples(fit_MMRsaturation_model, type = "predictive")
 ```
 
 Note that the m_pred variables are samples from the posterior predictive distribution evaluated at the observed data points.
@@ -178,22 +185,32 @@ The variables with a suffix "_prior" are samples from the prior distribution.
 You can also access the posterior samples at once:
 
 ```{r}
-extract_posterior_samples(fit_Saturation_model)
+extract_posterior_samples(fit_MMRsaturation_model)
 ```
 
 ## Various MCMC and model checks
 
 ```{r}
-fit_Saturation_model %>% 
+fit_MMRsaturation_model %>% 
   traceplot
 ```
 
 ```{r}
-fit_Saturation_model %>% 
+fit_MMRsaturation_model %>% 
   summary
 ```
 ```{r}
-fit_Saturation_model %>% 
+fit_MMRsaturation_model %>% 
   plot_prior_posterior
+```
+```{r}
+fit_MMRsaturation_model %>% 
+  posterior_predictive
+```
+
+
+```{r}
+fit_MMRsaturation_model %>% 
+  plot_posterior_predictive
 ```
 

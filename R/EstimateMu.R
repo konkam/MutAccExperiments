@@ -1,229 +1,39 @@
-MusGCM_model <- "model{
+# PriorPosteriorMu <- function(jags_fit, context) {
+#   mcmc_sample <- jags_fit$mcmc %>%
+#     lapply(as_tibble) %>%
+#     bind_rows() %>%
+#     mutate(mu_prior = 10^log10_mu_prior) %>%
+#     select(-log10_mu_prior)
+# 
+#   parnames <- c("mu_wt", "mu_proofminus", "mu_MMR", "mu_MMRproofminus") %>%
+#     paste(., "[", context, "]", sep = "")
+# 
+#   parnames %>%
+#     lapply(function(parname) {
+#       mcmc_sample %>%
+#         select(parname, mu_prior) %>%
+#         gather(type, value) %>%
+#         mutate(type = ifelse(type == "mu_prior", yes = "Prior", no = "Posterior")) %>%
+#         mutate(strain = parname)
+#     }) %>%
+#     bind_rows() %>%
+#     ggplot(aes(x = value, colour = type)) +
+#     theme_bw() +
+#     facet_wrap(~strain) +
+#     geom_histogram() +
+#     scale_x_log10()
+# }
+
+Mus_MMRsaturation_model <- "model{
 
   # Likelihood
   for (i in 1:ncontext){
     m_wt[i] ~ dpois(n[i]*mu_wt[i]*t_wt[i])
-    m_PolC[i] ~ dpois(n[i]*mu_PolC[i]*t_PolC[i])
-    m_MMR[i] ~ dpois(n[i]*mu_MMR[i]*t_MMR[i])
-    m_PolC_MMR[i] ~ dpois(n[i]*mu_PolC_MMR[i]*t_PolC_MMR[i])
-  }
-
-
-  # Reparametrisation
-
-  for (i in 1:ncontext){
-    mu_wt[i] = 10^log10_mu_wt[i]
-    mu_PolC[i] = 10^log10_mu_PolC[i]
-    mu_MMR[i] = 10^log10_mu_MMR[i]
-    mu_PolC_MMR[i] = 10^log10_mu_PolC_MMR[i]
-  }
-
-  # Prior
-
-  for (i in 1:ncontext){
-    log10_mu_wt[i] ~ dnorm(log10_mean_wt, tau_wt)
-    log10_mu_PolC[i] ~ dnorm(log10_mean_PolC, tau_PolC)
-    log10_mu_MMR[i] ~ dnorm(log10_mean_MMR, tau_MMR)
-    log10_mu_PolC_MMR[i] ~ dnorm(log10_mean_PolC_MMR, tau_PolC_MMR)
-  }
-
-  tau_wt = 1/sigma_wt^2
-  tau_PolC = 1/sigma_PolC^2
-  tau_MMR = 1/sigma_MMR^2
-  tau_PolC_MMR = 1/sigma_PolC_MMR^2
-
-  # mean_wt = 10^log10_mean_wt
-  # mean_PolC = 10^log10_mean_PolC
-  # mean_MMR = 10^log10_mean_MMR
-  # mean_PolC_MMR = 10^log10_mean_PolC_MMR
-
-  log10_mean_wt ~ dnorm(-8, 1/3^2)
-  log10_mean_PolC ~ dnorm(-8, 1/3^2)
-  log10_mean_MMR ~ dnorm(-8, 1/3^2)
-  log10_mean_PolC_MMR ~ dnorm(-8, 1/3^2)
-  sigma_wt ~ dt(0, 3, 5)T(0,)
-  sigma_PolC ~ dt(0, 3, 5)T(0,)
-  sigma_MMR ~ dt(0, 3, 5)T(0,)
-  sigma_PolC_MMR ~ dt(0, 3, 5)T(0,)
-
-  log10_mean_prior ~ dnorm(-8, 1/3^2)
-  sigma_prior ~ dt(0, 3, 5)T(0,)
-  mean_prior = 10^log10_mean_prior
-  tau_prior = 1/sigma_prior^2
-  log10_mu_prior  ~ dnorm(log10_mean_prior, tau_prior)
-
-}"
-
-
-#' Title
-#'
-#' @param mut_acc_experiment_data
-#'
-#' @return
-#' @export
-#'
-#' @examples
-EstimateMusGCM <- function(mut_acc_experiment_data) {
-  wider_data <- ConvertToWider(mut_acc_experiment_data)
-
-  data_jags <- list(
-    n = wider_data$n_c,
-    m_PolC_MMR = wider_data$m_sc_polC_mutL,
-    t_PolC_MMR = wider_data$t_s_polC_mutL,
-    m_MMR = wider_data$`m_sc_MMR-`,
-    t_MMR = wider_data$`t_s_MMR-`,
-    m_PolC = wider_data$m_sc_polC,
-    t_PolC = wider_data$t_s_polC,
-    m_wt = wider_data$m_sc_WT3610,
-    t_wt = wider_data$t_s_WT3610,
-    ncontext = length(wider_data$context_id)
-  )
-
-  model_jags <- rjags::jags.model(
-    file = textConnection(MusGCM_model),
-    # model_jags = rjags::jags.model(file = textConnection(saturation_model_shrinkage_logit_prior_theta4),
-    data = data_jags
-  )
-
-  runjags::autorun.jags(
-    model = MusGCM_model,
-    # runjags::autorun.jags(model = saturation_model_shrinkage_logit_prior_theta4,
-    monitor = c("mu_wt", "mu_PolC", "mu_MMR", "mu_PolC_MMR", "log10_mean_wt", "log10_mean_PolC", "log10_mean_MMR", "log10_mean_PolC_MMR", "sigma_wt", "sigma_PolC", "sigma_MMR", "sigma_PolC_MMR", "log10_mean_prior", "sigma_prior", "log10_mu_prior"),
-    data = data_jags,
-    max.time = "1m",
-    thin.sample = 4000
-  )
-
-  # plot(aa, vars = c( "theta4", "mu_log10_theta1", "sigma_log10_theta1", "alpha2", "beta2", "alpha3", "beta3"))
-}
-
-MusGCMNoPooling <- "model{
-
-  # Likelihood
-  for (i in 1:ncontext){
-    m_wt[i] ~ dpois(n[i]*mu_wt[i]*t_wt[i])
-    m_PolC[i] ~ dpois(n[i]*mu_PolC[i]*t_PolC[i])
-    m_MMR[i] ~ dpois(n[i]*mu_MMR[i]*t_MMR[i])
-    m_PolC_MMR[i] ~ dpois(n[i]*mu_PolC_MMR[i]*t_PolC_MMR[i])
-  }
-
-
-  # Reparametrisation
-
-  for (i in 1:ncontext){
-    mu_wt[i] = 10^log10_mu_wt[i]
-    mu_PolC[i] = 10^log10_mu_PolC[i]
-    mu_MMR[i] = 10^log10_mu_MMR[i]
-    mu_PolC_MMR[i] = 10^log10_mu_PolC_MMR[i]
-  }
-
-  # Prior
-
-  for (i in 1:ncontext){
-    log10_mu_wt[i] ~ dnorm(-8, tau_wt)
-    log10_mu_PolC[i] ~ dnorm(-8, tau_PolC)
-    log10_mu_MMR[i] ~ dnorm(-8, tau_MMR)
-    log10_mu_PolC_MMR[i] ~ dnorm(-8, tau_PolC_MMR)
-  }
-
-  tau_wt = 1/10^2
-  tau_PolC = 1/10^2
-  tau_MMR = 1/10^2
-  tau_PolC_MMR = 1/10^2
-
-  log10_mean_prior ~ dnorm(-8, 1/3^2)
-  mean_prior = 10^log10_mean_prior
-  tau_prior = 1/10^2
-  log10_mu_prior  ~ dnorm(log10_mean_prior, tau_prior)
-
-}"
-
-#' Title
-#'
-#' @param mut_acc_experiment_data
-#'
-#' @return
-#' @export
-#'
-#' @examples
-EstimateMusGCMNoPooling <- function(mut_acc_experiment_data) {
-  wider_data <- ConvertToWider(mut_acc_experiment_data)
-
-  data_jags <- list(
-    n = wider_data$n_c,
-    m_PolC_MMR = wider_data$m_sc_polC_mutL,
-    t_PolC_MMR = wider_data$t_s_polC_mutL,
-    m_MMR = wider_data$`m_sc_MMR-`,
-    t_MMR = wider_data$`t_s_MMR-`,
-    m_PolC = wider_data$m_sc_polC,
-    t_PolC = wider_data$t_s_polC,
-    m_wt = wider_data$m_sc_WT3610,
-    t_wt = wider_data$t_s_WT3610,
-    ncontext = length(wider_data$context_id)
-  )
-
-  model_jags <- rjags::jags.model(
-    file = textConnection(MusGCMNoPooling),
-    # model_jags = rjags::jags.model(file = textConnection(saturation_model_shrinkage_logit_prior_theta4),
-    data = data_jags
-  )
-
-  runjags::autorun.jags(
-    model = MusGCMNoPooling,
-    # runjags::autorun.jags(model = saturation_model_shrinkage_logit_prior_theta4,
-    monitor = c("mu_wt", "mu_PolC", "mu_MMR", "mu_PolC_MMR", "log10_mu_prior"),
-    data = data_jags,
-    max.time = "1m",
-    thin.sample = 4000
-  )
-
-  # plot(aa, vars = c( "theta4", "mu_log10_theta1", "sigma_log10_theta1", "alpha2", "beta2", "alpha3", "beta3"))
-}
-
-
-DiagnoseMutFit <- function(jags_fit) {
-  jags_fit$mcmc %>%
-    lapply(as_tibble) %>%
-    bind_rows()
-}
-
-PriorPosteriorMu <- function(jags_fit, context) {
-  mcmc_sample <- jags_fit$mcmc %>%
-    lapply(as_tibble) %>%
-    bind_rows() %>%
-    mutate(mu_prior = 10^log10_mu_prior) %>%
-    select(-log10_mu_prior)
-
-  parnames <- c("mu_wt", "mu_PolC", "mu_MMR", "mu_PolC_MMR") %>%
-    paste(., "[", context, "]", sep = "")
-
-  parnames %>%
-    lapply(function(parname) {
-      mcmc_sample %>%
-        select(parname, mu_prior) %>%
-        gather(type, value) %>%
-        mutate(type = ifelse(type == "mu_prior", yes = "Prior", no = "Posterior")) %>%
-        mutate(strain = parname)
-    }) %>%
-    bind_rows() %>%
-    ggplot(aes(x = value, colour = type)) +
-    theme_bw() +
-    facet_wrap(~strain) +
-    geom_histogram() +
-    scale_x_log10()
-}
-
-
-Mus_saturation_model <- "model{
-
-  # Likelihood
-  for (i in 1:ncontext){
-    m_wt[i] ~ dpois(n[i]*mu_wt[i]*t_wt[i])
-    m_PolC[i] ~ dpois(n[i]*mu_PolC[i]*t_PolC[i])
-    m_MMR[i] ~ dpois(n[i]*mu_MMR[i]*t_MMR[i])
-    m_PolC_MMR[i] ~ dpois(n[i]*mu_PolC_MMR[i]*t_PolC_MMR[i])
+    m_proofminus[i] ~ dpois(n[i]*mu_proofminus[i]*t_proofminus[i])
+    m_MMRminus[i] ~ dpois(n[i]*mu_MMRminus[i]*t_MMRminus[i])
+    m_MMRproofminus[i] ~ dpois(n[i]*mu_MMRproofminus[i]*t_MMRproofminus[i])
     
-    loglik_ind[i] <- log(dpois(m_wt[i], n[i]*mu_wt[i]*t_wt[i]) + dpois(m_PolC[i], n[i]*mu_PolC[i]*t_PolC[i]) + dpois(m_MMR[i], n[i]*mu_MMR[i]*t_MMR[i]) + dpois(m_PolC_MMR[i], n[i]*mu_PolC_MMR[i]*t_PolC_MMR[i]))
+    loglik_ind[i] <- log(dpois(m_wt[i], n[i]*mu_wt[i]*t_wt[i]) + dpois(m_proofminus[i], n[i]*mu_proofminus[i]*t_proofminus[i]) + dpois(m_MMRminus[i], n[i]*mu_MMRminus[i]*t_MMRminus[i]) + dpois(m_MMRproofminus[i], n[i]*mu_MMRproofminus[i]*t_MMRproofminus[i]))
   }
   
   loglikelihood <- sum(loglik_ind) # Calculate the full log likelihood
@@ -233,30 +43,30 @@ Mus_saturation_model <- "model{
 
   for (i in 1:ncontext){
     mu_wt[i] = 10^log10_mu_wt[i]
-    mu_MMR[i] = 10^log10_mu_MMR[i]
-    mu_PolC_MMR[i] = 10^log10_mu_PolC_MMR[i]
+    mu_MMRminus[i] = 10^log10_mu_MMRminus[i]
+    mu_MMRproofminus[i] = 10^log10_mu_MMRproofminus[i]
 
-    mu_PolC[i] = mu_PolC_MMR[i]*(theta4 + (1-theta4)*mu_wt[i]/mu_MMR[i])
+    mu_proofminus[i] = mu_MMRproofminus[i]*(theta4 + (1-theta4)*mu_wt[i]/mu_MMRminus[i])
   }
 
   # Prior
 
   for (i in 1:ncontext){
     log10_mu_wt[i] ~ dnorm(log10_mean_wt, tau_wt)
-    log10_mu_MMR[i] ~ dnorm(log10_mean_MMR, tau_MMR)
-    log10_mu_PolC_MMR[i] ~ dnorm(log10_mean_PolC_MMR, tau_PolC_MMR)
+    log10_mu_MMRminus[i] ~ dnorm(log10_mean_MMRminus, tau_MMRminus)
+    log10_mu_MMRproofminus[i] ~ dnorm(log10_mean_MMRproofminus, tau_MMRproofminus)
   }
 
   tau_wt = 1/log10_sigma_wt^2
-  tau_MMR = 1/log10_sigma_MMR^2
-  tau_PolC_MMR = 1/log10_sigma_PolC_MMR^2
+  tau_MMRminus = 1/log10_sigma_MMRminus^2
+  tau_MMRproofminus = 1/log10_sigma_MMRproofminus^2
 
   log10_mean_wt ~ dnorm(-8, 1/3^2)
-  log10_mean_MMR ~ dnorm(-8, 1/3^2)
-  log10_mean_PolC_MMR ~ dnorm(-8, 1/3^2)
+  log10_mean_MMRminus ~ dnorm(-8, 1/3^2)
+  log10_mean_MMRproofminus ~ dnorm(-8, 1/3^2)
   log10_sigma_wt ~ dt(0, 3, 5)T(0,)
-  log10_sigma_MMR ~ dt(0, 3, 5)T(0,)
-  log10_sigma_PolC_MMR ~ dt(0, 3, 5)T(0,)
+  log10_sigma_MMRminus ~ dt(0, 3, 5)T(0,)
+  log10_sigma_MMRproofminus ~ dt(0, 3, 5)T(0,)
 
   theta4 ~ dbeta(1, 1)
 
@@ -271,9 +81,9 @@ Mus_saturation_model <- "model{
 
   for (i in 1:ncontext){
     m_wt_pred[i] ~ dpois(n[i]*mu_wt[i]*t_wt[i])
-    m_PolC_pred[i] ~ dpois(n[i]*mu_PolC[i]*t_PolC[i])
-    m_MMR_pred[i] ~ dpois(n[i]*mu_MMR[i]*t_MMR[i])
-    m_PolC_MMR_pred[i] ~ dpois(n[i]*mu_PolC_MMR[i]*t_PolC_MMR[i])
+    m_proofminus_pred[i] ~ dpois(n[i]*mu_proofminus[i]*t_proofminus[i])
+    m_MMRminus_pred[i] ~ dpois(n[i]*mu_MMRminus[i]*t_MMRminus[i])
+    m_MMRproofminus_pred[i] ~ dpois(n[i]*mu_MMRproofminus[i]*t_MMRproofminus[i])
   }
 
 }"
@@ -287,225 +97,40 @@ Mus_saturation_model <- "model{
 #' @export
 #'
 #' @examples
-EstimateMusSaturation <- function(mut_acc_experiment_data) {
+EstimateMusMMRsaturation <- function(mut_acc_experiment_data) {
   wider_data <- ConvertToWider(mut_acc_experiment_data)
 
   data_jags <- list(
     n = wider_data$n,
-    m_PolC_MMR = wider_data$m_polC_mutL,
-    t_PolC_MMR = wider_data$t_polC_mutL,
-    m_MMR = wider_data$`m_MMR-`,
-    t_MMR = wider_data$`t_MMR-`,
-    m_PolC = wider_data$m_polC,
-    t_PolC = wider_data$t_polC,
+    m_MMRproofminus = wider_data$m_MMRproofminus,
+    t_MMRproofminus = wider_data$t_MMRproofminus,
+    m_MMRminus = wider_data$`m_MMRminus`,
+    t_MMRminus = wider_data$`t_MMRminus`,
+    m_proofminus = wider_data$m_proofminus,
+    t_proofminus = wider_data$t_proofminus,
     m_wt = wider_data$m_wt,
     t_wt = wider_data$t_wt,
-    ncontext = length(wider_data$mutation_type)
+    ncontext = length(wider_data$mutation_id)
   )
 
   model_jags <- rjags::jags.model(
-    file = textConnection(Mus_saturation_model),
+    file = textConnection(Mus_MMRsaturation_model),
     data = data_jags
   )
 
   res = runjags::autorun.jags(
-    model = Mus_saturation_model,
-    monitor = c("mu_wt", "mu_PolC", "mu_MMR", "mu_PolC_MMR", "log10_mean_wt", "log10_mean_MMR", "log10_mean_PolC_MMR", "log10_sigma_wt", "log10_sigma_MMR", "log10_sigma_PolC_MMR", "theta4", "log10_mean_prior", "log10_sigma_prior", "log10_mu_prior", "theta4_prior", "m_wt_pred", "m_PolC_pred", "m_MMR_pred", "m_PolC_MMR_pred", "loglikelihood"),
+    model = Mus_MMRsaturation_model,
+    monitor = c("mu_wt", "mu_proofminus", "mu_MMRminus", "mu_MMRproofminus", "log10_mean_wt", "log10_mean_MMRminus", "log10_mean_MMRproofminus", "log10_sigma_wt", "log10_sigma_MMRminus", "log10_sigma_MMRproofminus", "theta4", "log10_mean_prior", "log10_sigma_prior", "log10_mu_prior", "theta4_prior", "m_wt_pred", "m_proofminus_pred", "m_MMRminus_pred", "m_MMRproofminus_pred", "loglikelihood"),
     data = data_jags,
     max.time = "1m",
     thin.sample = 4000
   )
   
-  res$model_type = "saturation"
+  res$model_type = "MMRsaturation"
+  res$input_data = mut_acc_experiment_data
   return(res)
 }
 
-
-Mus_saturation_model_PolC_from_MMR <- "model{
-
-  # Likelihood
-  for (i in 1:ncontext){
-    m_wt[i] ~ dpois(n[i]*mu_wt[i]*t_wt[i])
-    m_PolC[i] ~ dpois(n[i]*mu_PolC[i]*t_PolC[i])
-    m_MMR[i] ~ dpois(n[i]*mu_MMR[i]*t_MMR[i])
-    m_PolC_MMR[i] ~ dpois(n[i]*mu_PolC_MMR[i]*t_PolC_MMR[i])
-  }
-
-
-  # Reparametrisation
-
-  for (i in 1:ncontext){
-    mu_wt[i] = 10^log10_mu_wt[i]
-    # mu_PolC[i] = 10^log10_mu_PolC[i]
-    mu_MMR[i] = 10^log10_mu_MMR[i]
-    mu_PolC_MMR[i] = 10^log10_mu_PolC_MMR[i]
-
-    mu_PolC[i] = rho*mu_PolC_MMR[i]
-  }
-
-  # Prior
-
-  for (i in 1:ncontext){
-    log10_mu_wt[i] ~ dnorm(log10_mean_wt, tau_wt)
-    # log10_mu_PolC[i] ~ dnorm(log10_mean_PolC, tau_PolC)
-    log10_mu_MMR[i] ~ dnorm(log10_mean_MMR, tau_MMR)
-    log10_mu_PolC_MMR[i] ~ dnorm(log10_mean_PolC_MMR, tau_PolC_MMR)
-  }
-
-  tau_wt = 1/sigma_wt^2
-  # tau_PolC = 1/sigma_PolC^2
-  tau_MMR = 1/sigma_MMR^2
-  tau_PolC_MMR = 1/sigma_PolC_MMR^2
-
-  # mean_wt = 10^log10_mean_wt
-  # mean_PolC = 10^log10_mean_PolC
-  # mean_MMR = 10^log10_mean_MMR
-  # mean_PolC_MMR = 10^log10_mean_PolC_MMR
-
-  log10_mean_wt ~ dnorm(-8, 1/3^2)
-  # log10_mean_PolC ~ dnorm(-8, 1/3^2)
-  log10_mean_MMR ~ dnorm(-8, 1/3^2)
-  log10_mean_PolC_MMR ~ dnorm(-8, 1/3^2)
-  sigma_wt ~ dt(0, 3, 5)T(0,)
-  # sigma_PolC ~ dt(0, 3, 5)T(0,)
-  sigma_MMR ~ dt(0, 3, 5)T(0,)
-  sigma_PolC_MMR ~ dt(0, 3, 5)T(0,)
-
-  rho ~ dt(0, 50, 5)T(0,)
-
-  # Prior
-  log10_mean_prior ~ dnorm(-8, 1/3^2)
-  sigma_prior ~ dt(0, 3, 5)T(0,)
-  mean_prior = 10^log10_mean_prior
-  tau_prior = 1/sigma_prior^2
-  log10_mu_prior  ~ dnorm(log10_mean_prior, tau_prior)
-  rho_prior ~ dt(0, 3, 5)T(0,)
-
-}"
-
-
-#' Title
-#'
-#' @param mut_acc_experiment_data
-#'
-#' @return
-#' @export
-#'
-#' @examples
-EstimateMusSaturation_PolC_from_MMR <- function(mut_acc_experiment_data) {
-  wider_data <- ConvertToWider(mut_acc_experiment_data)
-
-  data_jags <- list(
-    n = wider_data$n_c,
-    m_PolC_MMR = wider_data$m_sc_polC_mutL,
-    t_PolC_MMR = wider_data$t_s_polC_mutL,
-    m_MMR = wider_data$`m_sc_MMR-`,
-    t_MMR = wider_data$`t_s_MMR-`,
-    m_PolC = wider_data$m_sc_polC,
-    t_PolC = wider_data$t_s_polC,
-    m_wt = wider_data$m_sc_WT3610,
-    t_wt = wider_data$t_s_WT3610,
-    ncontext = length(wider_data$context_id)
-  )
-
-  model_jags <- rjags::jags.model(
-    file = textConnection(Mus_saturation_model_PolC_from_MMR),
-    data = data_jags
-  )
-
-  runjags::autorun.jags(
-    model = Mus_saturation_model_PolC_from_MMR,
-    monitor = c("mu_wt", "mu_PolC", "mu_MMR", "mu_PolC_MMR", "log10_mean_wt", "log10_mean_MMR", "log10_mean_PolC_MMR", "sigma_wt", "sigma_MMR", "sigma_PolC_MMR", "rho", "rho_prior", "log10_mean_prior", "sigma_prior", "log10_mu_prior"),
-    data = data_jags,
-    max.time = "1m",
-    thin.sample = 4000
-  )
-
-}
-
-
-
-Mus_saturation_model_no_PolC <- "model{
-
-  # Likelihood
-  for (i in 1:ncontext){
-    m_wt[i] ~ dpois(n[i]*mu_wt[i]*t_wt[i])
-    m_MMR[i] ~ dpois(n[i]*mu_MMR[i]*t_MMR[i])
-    m_PolC_MMR[i] ~ dpois(n[i]*mu_PolC_MMR[i]*t_PolC_MMR[i])
-  }
-
-
-  # Reparametrisation
-
-  for (i in 1:ncontext){
-    mu_wt[i] = 10^log10_mu_wt[i]
-    mu_MMR[i] = 10^log10_mu_MMR[i]
-    mu_PolC_MMR[i] = 10^log10_mu_PolC_MMR[i]
-  }
-
-  # Prior
-
-  for (i in 1:ncontext){
-    log10_mu_wt[i] ~ dnorm(log10_mean_wt, tau_wt)
-    log10_mu_MMR[i] ~ dnorm(log10_mean_MMR, tau_MMR)
-    log10_mu_PolC_MMR[i] ~ dnorm(log10_mean_PolC_MMR, tau_PolC_MMR)
-  }
-
-  tau_wt = 1/sigma_wt^2
-  tau_MMR = 1/sigma_MMR^2
-  tau_PolC_MMR = 1/sigma_PolC_MMR^2
-
-  log10_mean_wt ~ dnorm(-8, 1/3^2)
-  log10_mean_MMR ~ dnorm(-8, 1/3^2)
-  log10_mean_PolC_MMR ~ dnorm(-8, 1/3^2)
-  sigma_wt ~ dt(0, 3, 5)T(0,)
-  sigma_MMR ~ dt(0, 3, 5)T(0,)
-  sigma_PolC_MMR ~ dt(0, 3, 5)T(0,)
-
-  log10_mean_prior ~ dnorm(-8, 1/3^2)
-  sigma_prior ~ dt(0, 3, 5)T(0,)
-  mean_prior = 10^log10_mean_prior
-  tau_prior = 1/sigma_prior^2
-  log10_mu_prior  ~ dnorm(log10_mean_prior, tau_prior)
-
-}"
-
-
-#' Title
-#'
-#' @param mut_acc_experiment_data
-#'
-#' @return
-#' @export
-#'
-#' @examples
-EstimateMusSaturationNoPolC <- function(mut_acc_experiment_data) {
-  wider_data <- ConvertToWider(mut_acc_experiment_data)
-
-  data_jags <- list(
-    n = wider_data$n_c,
-    m_PolC_MMR = wider_data$m_sc_polC_mutL,
-    t_PolC_MMR = wider_data$t_s_polC_mutL,
-    m_MMR = wider_data$`m_sc_MMR-`,
-    t_MMR = wider_data$`t_s_MMR-`,
-    m_wt = wider_data$m_sc_WT3610,
-    t_wt = wider_data$t_s_WT3610,
-    ncontext = length(wider_data$context_id)
-  )
-
-  model_jags <- rjags::jags.model(
-    file = textConnection(Mus_saturation_model_no_PolC),
-    data = data_jags
-  )
-
-  runjags::autorun.jags(
-    model = Mus_saturation_model_no_PolC,
-    monitor = c("mu_wt", "mu_MMR", "mu_PolC_MMR", "log10_mean_wt", "log10_mean_MMR", "log10_mean_PolC_MMR", "sigma_wt", "sigma_MMR", "log10_mean_prior", "sigma_prior", "log10_mu_prior"),
-    data = data_jags,
-    max.time = "1m",
-    thin.sample = 4000
-  )
-}
 
 MusGCM_one_strain_model <- "model{
 
@@ -568,7 +193,7 @@ EstimateMusGCM_onestrain <- function(mut_acc_experiment_data) {
     n = mut_acc_experiment_data$n,
     m = mut_acc_experiment_data$m,
     t = mut_acc_experiment_data$t,
-    nmutations = length(mut_acc_experiment_data$mutation_type)
+    nmutations = length(mut_acc_experiment_data$mutation_id)
   )
 
   model_jags <- rjags::jags.model(
@@ -584,5 +209,6 @@ EstimateMusGCM_onestrain <- function(mut_acc_experiment_data) {
     thin.sample = 4000
   )
   res$model_type = "GCM_one_strain"
+  res$input_data = mut_acc_experiment_data
   return(res)
 }

@@ -31,7 +31,7 @@ plot_prior_posterior_GCM <- function(fit_GCM) {
     scale_color_viridis_d(name = "")
 }
 
-#' Prior posterior plot for the saturation model
+#' Prior posterior plot for the MMRsaturation model
 #'
 #' @param fit_GCM
 #'
@@ -39,11 +39,11 @@ plot_prior_posterior_GCM <- function(fit_GCM) {
 #' @export
 #'
 #' @examples
-plot_prior_posterior_saturation <- function(fit_saturation) {
+plot_prior_posterior_MMRsaturation <- function(fit_MMRsaturation) {
   params <- c("log10_mean", "log10_sigma")
-  strains <- c("wt", "MMR", "PolC_MMR")
+  strains <- c("wt", "MMRminus", "MMRproofminus")
 
-  fit_saturation$mcmc %>%
+  fit_MMRsaturation$mcmc %>%
     lapply(as_tibble) %>%
     bind_rows() %>%
     (function(df) {
@@ -96,9 +96,9 @@ plot_prior_posterior <- function(fit) {
     fit %>%
       plot_prior_posterior_GCM()
   }
-  else if (fit$model_type == "saturation") {
+  else if (fit$model_type == "MMRsaturation") {
     fit %>%
-      plot_prior_posterior_saturation()
+      plot_prior_posterior_MMRsaturation()
   } else {
     stop("Prior posterior plot not yet implemented for this model")
   }

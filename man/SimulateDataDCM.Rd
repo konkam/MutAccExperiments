@@ -21,6 +21,6 @@ SimulateDataDCM(
 Simulate some data for one context
 }
 \examples{
-theta = MomentMatchingEstimation(n = 21836, m_PolC_MMR = 4, t_PolC_MMR = 2.30e2, m_MMR = 6, t_MMR = 6.45e3, m_PolC = 2, t_PolC = 1.89e3, m_wt = 4, t_wt = 2.49e5)
+theta = MomentMatchingEstimation(n = 21836, m_polC_MMR = 4, t_polC_MMR = 2.30e2, m_MMR = 6, t_MMR = 6.45e3, m_polC = 2, t_polC = 1.89e3, m_wt = 4, t_wt = 2.49e5)
 SimulateData(theta1 = 7.96451e-07, theta2 = 0.05348838, theta3 = 6.330917e-02, theta4 = 1.961348e-09, n = 21836, t_s = c(6453, 1895, 230, 248920), s = c("MMR-", "polC", "polC_mutL", "WT3610"))
 }

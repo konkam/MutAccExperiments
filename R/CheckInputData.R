@@ -8,8 +8,8 @@
 #' @examples
 check_input_format_GCM <- function(input_data) {
   column_names <- colnames(input_data)
-  if (!("mutation_type" %in% column_names)) {
-    stop('The column "mutation_type" is missing from the input data, but it is needed')
+  if (!("mutation_id" %in% column_names)) {
+    stop('The column "mutation_id" is missing from the input data, but it is needed')
   }
   logical_vector = map(c("m", "n", "t"), function(x) {
     x %in% column_names
