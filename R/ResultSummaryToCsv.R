@@ -32,7 +32,7 @@ extract_posterior_samples <- function(jags_fit, type = "all") {
   } else if (type == "mu") {
     extract_posterior_samples_all(jags_fit) %>%
       dplyr::select(contains("mu"), iteration, chain_id) %>%
-      dplyr::select(-contains("prior"),-contains("mean"))
+      dplyr::select(-contains("prior"), -contains("mean"))
   } else if (type == "hyperparameters" | type == "hyper") {
     extract_posterior_samples_all(jags_fit) %>%
       dplyr::select(contains("sigma"), contains("mean"), contains("theta"), loglikelihood, iteration, chain_id) %>%

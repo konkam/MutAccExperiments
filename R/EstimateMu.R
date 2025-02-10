@@ -1,29 +1,3 @@
-# PriorPosteriorMu <- function(jags_fit, context) {
-#   mcmc_sample <- jags_fit$mcmc %>%
-#     lapply(as_tibble) %>%
-#     bind_rows() %>%
-#     mutate(mu_prior = 10^log10_mu_prior) %>%
-#     select(-log10_mu_prior)
-# 
-#   parnames <- c("mu_wt", "mu_proofminus", "mu_MMR", "mu_MMRproofminus") %>%
-#     paste(., "[", context, "]", sep = "")
-# 
-#   parnames %>%
-#     lapply(function(parname) {
-#       mcmc_sample %>%
-#         select(parname, mu_prior) %>%
-#         gather(type, value) %>%
-#         mutate(type = ifelse(type == "mu_prior", yes = "Prior", no = "Posterior")) %>%
-#         mutate(strain = parname)
-#     }) %>%
-#     bind_rows() %>%
-#     ggplot(aes(x = value, colour = type)) +
-#     theme_bw() +
-#     facet_wrap(~strain) +
-#     geom_histogram() +
-#     scale_x_log10()
-# }
-
 Mus_MMRsaturation_model <- "model{
 
   # Likelihood
@@ -32,10 +6,10 @@ Mus_MMRsaturation_model <- "model{
     m_proofminus[i] ~ dpois(n[i]*mu_proofminus[i]*t_proofminus[i])
     m_MMRminus[i] ~ dpois(n[i]*mu_MMRminus[i]*t_MMRminus[i])
     m_MMRproofminus[i] ~ dpois(n[i]*mu_MMRproofminus[i]*t_MMRproofminus[i])
-    
+
     loglik_ind[i] <- log(dpois(m_wt[i], n[i]*mu_wt[i]*t_wt[i]) + dpois(m_proofminus[i], n[i]*mu_proofminus[i]*t_proofminus[i]) + dpois(m_MMRminus[i], n[i]*mu_MMRminus[i]*t_MMRminus[i]) + dpois(m_MMRproofminus[i], n[i]*mu_MMRproofminus[i]*t_MMRproofminus[i]))
   }
-  
+
   loglikelihood <- sum(loglik_ind) # Calculate the full log likelihood
 
 
@@ -118,16 +92,16 @@ EstimateMusMMRsaturation <- function(mut_acc_experiment_data) {
     data = data_jags
   )
 
-  res = runjags::autorun.jags(
+  res <- runjags::autorun.jags(
     model = Mus_MMRsaturation_model,
     monitor = c("mu_wt", "mu_proofminus", "mu_MMRminus", "mu_MMRproofminus", "log10_mean_wt", "log10_mean_MMRminus", "log10_mean_MMRproofminus", "log10_sigma_wt", "log10_sigma_MMRminus", "log10_sigma_MMRproofminus", "theta4", "log10_mean_prior", "log10_sigma_prior", "log10_mu_prior", "theta4_prior", "m_wt_pred", "m_proofminus_pred", "m_MMRminus_pred", "m_MMRproofminus_pred", "loglikelihood"),
     data = data_jags,
     max.time = "1m",
     thin.sample = 4000
   )
-  
-  res$model_type = "MMRsaturation"
-  res$input_data = mut_acc_experiment_data
+
+  res$model_type <- "MMRsaturation"
+  res$input_data <- mut_acc_experiment_data
   return(res)
 }
 
@@ -188,7 +162,6 @@ MusGCM_one_strain_model <- "model{
 #' data(minimal_input_data_onestrain)
 #' EstimateMusGCM_onestrain(minimal_input_data_onestrain)
 EstimateMusGCM_onestrain <- function(mut_acc_experiment_data) {
-
   data_jags <- list(
     n = mut_acc_experiment_data$n,
     m = mut_acc_experiment_data$m,
@@ -201,14 +174,14 @@ EstimateMusGCM_onestrain <- function(mut_acc_experiment_data) {
     data = data_jags
   )
 
-  res = runjags::autorun.jags(
+  res <- runjags::autorun.jags(
     model = MusGCM_one_strain_model,
     monitor = c("m_pred", "log10_mu", "log10_mean", "log10_sigma", "log10_mean_prior", "log10_sigma_prior", "log10_mu_prior", "loglikelihood"),
     data = data_jags,
     max.time = "1m",
     thin.sample = 4000
   )
-  res$model_type = "GCM_one_strain"
-  res$input_data = mut_acc_experiment_data
+  res$model_type <- "GCM_one_strain"
+  res$input_data <- mut_acc_experiment_data
   return(res)
 }

@@ -49,8 +49,6 @@ Alternatively, you may open the folder using the Rstudio editor and press `Ctrl 
     - JAGS + the R package RJags (On ubuntu, jags is on the canonical repository, available by apt install jags)
     - R package tidyverse
     - R package coda
-    - A functioning latex installation
-    - cmake
 
 # Data format
 
@@ -61,40 +59,51 @@ library(tidyverse)
 ```
 
 ```{r}
-input_data = read.delim(file = "data-raw/SAT_mcmc_chain_labmut_R3610MMR-3610_inputfile.csv", sep = " ") %>% 
-  rename(mutation_id = context_id,
-         m = m_sc, 
-         n = n_c,
-         t = t_s, 
-         mutation_label = labmut) %>% 
-  mutate(strain = gsub("MMR-", "MMRminus", strain))  %>%
-  mutate(strain = gsub("WT3610", "wt", strain)) %>% 
-  mutate(strain = gsub("polC_mutL", "MMRproofminus", strain)) %>% 
-  mutate(strain = gsub("polC", "proofminus", strain))
+data(example_input_data)
 
-input_data_onestrain = input_data %>% 
-  filter(strain == first(strain)) 
+input_data_onestrain <- example_input_data %>%
+  filter(strain == first(strain))
 ```
 
 The minimum data required to run the analysis is a data frame with the following columns:
 
 ```{r}
-minimal_input_data_onestrain = input_data %>% 
-  filter(strain == first(strain)) %>% 
-  select(mutation_id, m, n, t) 
+minimal_input_data_onestrain <- example_input_data %>%
+  filter(strain == first(strain)) %>%
+  select(mutation_id, m, n, t)
 minimal_input_data_onestrain
 ```
 
 ```{r}
-input_data_onestrain %>% 
+input_data_onestrain %>%
   check_input_format_GCM()
 ```
 
 
 # Fitting the GCM model
 
+The GCM model is defined as follows:
+
+$$
+\begin{align}
+m_i &\sim \text{Poisson}(n_i \mu_i t_i) \quad \forall i = 1, \ldots, I\\
+\log_{10}(\mu_i) &\sim \mathcal{N}(\nu, \sigma) \\
+\mu_0 &\sim \mathcal{N}(-8, 3) \\
+\sigma &\sim \text{t}^+(0, 3, 5)\\
+\end{align}
+$$
+
+where $m_i$ is the number of mutations observed of the $i$-th type, $n_i$ is the number of possible mutation sites of type $i$ in the genome, $t_i$ is the number of
+elapsed generations and $\mu_i$ is the mutation rate for mutations of type $i$. $n_i, t_i$ are introduced so that $\mu_i$ can be interpreted as a mutation rate per site and
+per generation, which will be comparable over mutation types. $\nu$ is the mean of the $\log10$ mutation rate, and $\sigma$ is the standard deviation of the $\log10$ mutation rate.
+$\text{t}^+$ denotes the t distribution truncated to positive values.
+
+This is a hierarchical structure, where $\nu$ represents the average tendency of the $\log10$ mutation rates (over mutation
+types), and $\sigma$ represents the variability of the $\log10$ mutation rates between mutation types. These two values caracterise the average tendency and the dispersion of the mutation
+rates.
+
 ```{r}
-fit_GCM_model = input_data_onestrain %>% 
+fit_GCM_model <- input_data_onestrain %>%
   EstimateMusGCM_onestrain()
 ```
 
@@ -129,17 +138,17 @@ extract_posterior_samples(fit_GCM_model)
 ## Various MCMC and model checks
 
 ```{r}
-fit_GCM_model %>% 
-  traceplot
+fit_GCM_model %>%
+  traceplot()
 ```
 
 ```{r}
-fit_GCM_model %>% 
-  summary
+fit_GCM_model %>%
+  summary()
 ```
 ```{r}
-fit_GCM_model %>% 
-  plot_prior_posterior
+fit_GCM_model %>%
+  plot_prior_posterior()
 ```
 
 ```{r}
@@ -152,16 +161,57 @@ plot_posterior_predictive_onestrain(fit_GCM_model)
 
 # Fitting the model with MMR saturation
 
+Compared to the previous unconstrained model, the MMR saturation model assumes that the mutation rates of the different
+strains are related, i.e. constrained by each other. Four strains are considered, wild-type (wt), MMR-deactivated (MMR-), proofreading-deficient (proof-) and MMR-deactivated and proofreading-deficient (MMR-_proof-).
+The model includes an explicit parameter for the
+saturation mechanism, which would be equal to 0 in the absence of saturation. Therefore, this
+parameter quantifies both the evidence for the existence of a saturation mechanism and its
+magnitude.
+
+n practice, for each mutation type we assume that there is a baseline error rate $\gamma_i$. These mutations may
+be corrected by the Proofreading mechanism with a probability $1-q_{\text{proofreading},i}$, and further
+corrected by the MMR mechanism with a probability $1-q_{\text{MMR},i}$. Therefore, in the wild-type strain,
+the number of observed mutation is impacted by the error rate and the two repair mechanisms. This
+error rate is observed directly for the mutant MMR-_proof- for which both MMR and Proofreading are inactivated.
+The strain MMR- has the baseline error rate moderated by the Proofreading mechanism, the strain
+C* has the baseline error moderated by the MMR mechanism which can saturate. Saturation is
+modelled as follows: a proportion $1-\theta$ of mutations are corrected by the MMR mechanism with
+probability  $1-q_{\text{MMR},i}$, until saturation may occur. At this point, the remaining proportion of
+mutations remain uncorrected. As mentioned above, if $\theta=0$, there is no saturation, and an estimate
+of $\theta$ significatively different from 0 provides evidence for saturation. This results in the following
+system of equations for the rate of mutation of type $i$ per site
+per generation in the four strains:
+
+$$
+\begin{align}
+\mu_{\text{MMR-\_proof-},i} &= \gamma_i \\
+\mu_{\text{MMR-},i} &= \gamma_i q_{\text{proofreading},i} \\
+\mu_{\text{proof-},i} &= \gamma_i \left(\theta + (1-\theta) q_{\text{MMR},i} \right) \\
+\mu_{\text{wt},i} &= \gamma_i q_{\text{proofreading},i}q_{\text{MMR},i} \\
+\end{align}
+$$
+
+We choose the following generative model:
+
+$$
+\begin{align}
+m_{s, i} &\sim \text{Poisson}(n_{s, i} \mu_{s, i} t_{s, i}) \quad \text{for } i = 1, \ldots, I, s \in \left\{\text{wt}, \text{MMR-}, \text{proof-}, \text{MMR-proof-}\right\}\\
+\log10 \mu_{s, i} &\sim \mathcal{N}(\nu_{s}, \sigma_{s})  \quad \text{for } i = 1, \ldots, I, s \in \left\{\text{wt}, \text{MMR-}, \text{MMR-proof-}\right\} \\
+\nu_s &\sim \mathcal{N}(-8, 3) \quad \text{for } s \in \left\{\text{wt}, \text{MMR-}, \text{MMR-proof-}\right\}\\
+\sigma_s &\sim \text{t}^+(0, 3, 5) \quad \text{for } s \in \left\{\text{wt}, \text{MMR-}, \text{MMR-proof-}\right\}\\
+\theta &\sim \text{Beta}(1, 1)\\
+\end{align}
+$$
+
 ```{r}
-minimal_input_data = input_data %>% 
-  select(strain, mutation_id, m, n, t) 
+minimal_input_data <- example_input_data %>%
+  select(strain, mutation_id, m, n, t)
 
 minimal_input_data
-
 ```
 
 ```{r}
-fit_MMRsaturation_model = EstimateMusMMRsaturation(input_data)
+fit_MMRsaturation_model <- EstimateMusMMRsaturation(example_input_data)
 ```
 
 ## Accessing posterior samples
@@ -191,27 +241,28 @@ extract_posterior_samples(fit_MMRsaturation_model)
 ## Various MCMC and model checks
 
 ```{r}
-fit_MMRsaturation_model %>% 
-  traceplot
+fit_MMRsaturation_model %>%
+  traceplot()
 ```
 
 ```{r}
-fit_MMRsaturation_model %>% 
-  summary
+fit_MMRsaturation_model %>%
+  summary()
 ```
 
 ```{r}
-fit_MMRsaturation_model %>% 
-  plot_prior_posterior
+fit_MMRsaturation_model %>%
+  plot_prior_posterior()
 ```
+
 ```{r}
-fit_MMRsaturation_model %>% 
-  posterior_predictive
+fit_MMRsaturation_model %>%
+  posterior_predictive()
 ```
 
 
 ```{r}
-fit_MMRsaturation_model %>% 
-  plot_posterior_predictive
+fit_MMRsaturation_model %>%
+  plot_posterior_predictive()
 ```
 

@@ -28,7 +28,9 @@ plot_prior_posterior_GCM <- function(fit_GCM) {
     theme_bw() +
     facet_wrap(~parameter, scales = "free") +
     geom_density() +
-    scale_color_viridis_d(name = "")
+    scale_color_viridis_d(name = "") +
+    xlab("Parameter value") +
+    ylab("Density")
 }
 
 #' Prior posterior plot for the MMRsaturation model
@@ -79,7 +81,9 @@ plot_prior_posterior_MMRsaturation <- function(fit_MMRsaturation) {
     theme_bw() +
     facet_wrap(~parameter, scales = "free", ncol = 2) +
     geom_density() +
-    scale_color_viridis_d(name = "")
+    scale_color_viridis_d(name = "") +
+    xlab("Parameter value") +
+    ylab("Density")
 }
 
 
@@ -95,8 +99,7 @@ plot_prior_posterior <- function(fit) {
   if (fit$model_type == "GCM_one_strain") {
     fit %>%
       plot_prior_posterior_GCM()
-  }
-  else if (fit$model_type == "MMRsaturation") {
+  } else if (fit$model_type == "MMRsaturation") {
     fit %>%
       plot_prior_posterior_MMRsaturation()
   } else {
