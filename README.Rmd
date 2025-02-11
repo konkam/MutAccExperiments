@@ -168,7 +168,7 @@ plot_posterior_predictive_onestrain(fit_GCM_model)
 # Fitting the model with MMR saturation
 
 Compared to the previous unconstrained model, the MMR saturation model assumes that the mutation rates of the different
-strains are related, i.e. constrained by each other. Four strains are considered, wild-type (wt), MMR-deactivated (MMR-), proofreading-deficient (proof-) and MMR-deactivated and proofreading-deficient (MMR-_proof-).
+strains are related, i.e. constrained by each other. Four strains are considered, wild-type (wt), MMR-deactivated (MMR-), proofreading-deficient (proof-) and MMR-deactivated and proofreading-deficient (MMR-proof-).
 The model includes an explicit parameter for the
 saturation mechanism, which would be equal to 0 in the absence of saturation. Therefore, this
 parameter quantifies both the evidence for the existence of a saturation mechanism and its
@@ -178,7 +178,7 @@ n practice, for each mutation type we assume that there is a baseline error rate
 be corrected by the Proofreading mechanism with a probability $1-q_{\text{proofreading},i}$, and further
 corrected by the MMR mechanism with a probability $1-q_{\text{MMR},i}$. Therefore, in the wild-type strain,
 the number of observed mutation is impacted by the error rate and the two repair mechanisms. This
-error rate is observed directly for the mutant MMR-_proof- for which both MMR and Proofreading are inactivated.
+error rate is observed directly for the mutant MMR-proof- for which both MMR and Proofreading are inactivated.
 The strain MMR- has the baseline error rate moderated by the Proofreading mechanism, the strain
 C* has the baseline error moderated by the MMR mechanism which can saturate. Saturation is
 modelled as follows: a proportion $1-\theta$ of mutations are corrected by the MMR mechanism with
@@ -190,7 +190,7 @@ per generation in the four strains:
 
 $$
 \begin{align}
-\mu_{\text{MMR-\_proof-},i} &= \gamma_i \\
+\mu_{\text{MMR-proof-},i} &= \gamma_i \\
 \mu_{\text{MMR-},i} &= \gamma_i q_{\text{proofreading},i} \\
 \mu_{\text{proof-},i} &= \gamma_i \left(\theta + (1-\theta) q_{\text{MMR},i} \right) \\
 \mu_{\text{wt},i} &= \gamma_i q_{\text{proofreading},i}q_{\text{MMR},i} \\
