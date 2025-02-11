@@ -30,13 +30,13 @@ This is a package to analyse data generated from Mutation Accumulation Experimen
 Clone the repository on your computer using
 
 ```
-git clone git@forgemia.inra.fr:konkam/MutAccExperiments.git
+git clone git@github.com:konkam/MutAccExperiments.git
 ```
 
 or 
 
 ```
-git clone https://forgemia.inra.fr/konkam/MutAccExperiments.git
+git clone https://github.com/konkam/MutAccExperiments.git
 
 ```
 
@@ -52,7 +52,7 @@ Alternatively, you may open the folder using the Rstudio editor and press `Ctrl 
 
 - Dependencies should be:
     - R package devtools
-    - JAGS + the R package RJags (On ubuntu, jags is on the canonical repository, available by apt install jags)
+    - JAGS + the R package RJags (On ubuntu, jags is on the canonical repository, available by `apt install jags`)
     - R package tidyverse
     - R package coda
 
