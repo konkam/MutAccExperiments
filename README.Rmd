@@ -201,10 +201,10 @@ We choose the following generative model:
 
 $$
 \begin{align}
-m_{s, i} &\sim \text{Poisson}(n_{s, i} \mu_{s, i} t_{s, i}) \quad \text{for } i = 1, \ldots, I, s \in \{\text{wt}, \text{MMR-}, \text{proof-}, \text{MMR-proof-}\}\\
-\log10 \mu_{s, i} &\sim \mathcal{N}(\nu_{s}, \sigma_{s})  \quad \text{for } i = 1, \ldots, I, s \in \{\text{wt}, \text{MMR-}, \text{MMR-proof-}\} \\
-\nu_s &\sim \mathcal{N}(-8, 3) \quad \text{for } s \in \{\text{wt}, \text{MMR-}, \text{MMR-proof-}\}\\
-\sigma_s &\sim \text{t}^+(0, 3, 5) \quad \text{for } s \in \{\text{wt}, \text{MMR-}, \text{MMR-proof-}\}\\
+m_{s, i} &\sim \text{Poisson}(n_{s, i} \mu_{s, i} t_{s, i}) \qquad \text{for } i = 1, \ldots, I, s = \text{wt}, \text{MMR-}, \text{proof-}, \text{MMR-proof-}\\
+\log10 \mu_{s, i} &\sim \mathcal{N}(\nu_{s}, \sigma_{s})  \qquad \text{for } i = 1, \ldots, I, s = \text{wt}, \text{MMR-}, \text{MMR-proof-} \\
+\nu_s &\sim \mathcal{N}(-8, 3) \qquad \text{for } s = \text{wt}, \text{MMR-}, \text{MMR-proof-}\\
+\sigma_s &\sim \text{t}^+(0, 3, 5) \qquad \text{for } s = \text{wt}, \text{MMR-}, \text{MMR-proof-}\\
 \theta &\sim \text{Beta}(1, 1)\\
 \end{align}
 $$
